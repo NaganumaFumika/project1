@@ -6,32 +6,36 @@ public class aStar{
     public static int map_width,map_height;
     public static char[][] map;
     public static int[] start = new int[2];
-    public static int[] goal = new int[2];
+	public static int[] goal = new int[2];
+	
+	public aStar(char[][] niimimap){
+		char[][] map = niimimap;
+
+	}
 
     public static void main (String[] args) {
-	Node node;
-	
-	String[] map_data = {
-	    "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
-	    "OS  O     O     O         O          O",
-	    "O   O  O  O  O  O         O    OOOO GO",
-	    "O      O     O  O   OOOO  O    O  OOOO",
-	    "OO OOOOOOOOOOOOOOO  O     O    O     O",
-	    "O                O  O     O          O",
-	    "O        OOO     O  O     OOOOOOOOO  O",
-	    "O  OO    O    OOOO  O     O      OO  O",
-	    "O   O    O          O     O  O   O   O",
-	    "O   OOO  O          O        O   O   O",
-	    "O        O          O        O       O",
-	    "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+		Node node;
+		
+
+	/*	String[] map_data = {
+		"OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+	    "OS        OOOOOOOO     OOOOOO  OOOOOO",
+	    "OOOOOOOO  OOOOOOOO     OOOOOO  OOOOOO",
+		"OOOOOOOO  OOOOOOOO     OOOOOO  OOOOOO",
+		"OOOOOOOO                            O",
+	    "OOOOOOOO  OOOOOOOO     OOOOOOOOOOOO O",
+	    "OOOOOOOO  OOOOOOOO     OOOOOOOOOOOO O",
+	    "O         OOOOOOOO     OOOOOOOOOOOO O",
+	    "O  OOOOO                 O      O G O",
+	    "O   OOOOO    OOOO      OOOOOO   O   O",
+	    "O    OOOOO   OOOO       OOOOO   O   O",
+	    "O     OOOOO               OOO       O",
+	    "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
 	};
-	
-	map_width = 0;
-	for (int i = 0; i < map_data.length; i++) {
-	    map_width = Math.max (map_width, map_data[i].length());
-	}
-	map_height = map_data.length;
-	
+	*/
+	map_height = map.length;
+	map_width = map[0].length;
+	/*
 	map = new char[map_height][map_width];
 	for (int i = 0; i < map_height; i++) {
 	    for (int j = 0; j < map_width; j++) {
@@ -43,11 +47,11 @@ public class aStar{
 		if( map[i][j] == 'G'){
 		    goal[0] = j;
 		    goal[1] = i;
-		}
-	    }
+			}
+	    }	
+	}*/		
+		new NodeList();
 	}
-	new NodeList();
-    }
 }
 
 // Nodeクラス
@@ -55,16 +59,14 @@ class Node{
     public int[] pos = new int[2];
     public int hs, fs;
     public Node parent_node;
-    /* public int[] owner_list;  // ???*/
  
     // コンストラクタ
     public Node (int x, int y) {
         pos[0] = x;  
-	pos[1] = y; 
+	    pos[1] = y; 
         hs = (int)(Math.pow(x-aStar.goal[0],2) + Math.pow(y-aStar.goal[1],2));
         fs = 0;
-        /*this.owner_list = null;*/
-	parent_node = null;
+	    parent_node = null;
     }
 
     // 現在地をゴールとするメソッド？
@@ -89,7 +91,6 @@ class NodeList{
 	start_node.fs = start_node.hs;
 	open_list.add(start_node);
 	search_path();
-
     }
 
     public Node findN(int xP,int yP,ArrayList<Node> list){
@@ -121,7 +122,7 @@ class NodeList{
     }
 
     //while True:以降の処理？
-    public void search_path(){
+    public char[][] search_path(){
 	Node n;
 	Node v;//(2,1)
 	int dist,n_gs;
@@ -232,13 +233,15 @@ class NodeList{
 	    newMap[path.pos[1]][path.pos[0]] = '+';
 	    path = path.parent_node;
 	}
-	
-	// 描画
+
+	return newMap;
+	}
+/*	// 描画
 	for (int i = 0; i < aStar.map_height; i++) {
 	    String s = String.valueOf(newMap[i]);
 	    System.out.println(s);
 	}
-    }
+    }*/
     
     //pythonにあってjavaにない関数の実装
     public Node min(ArrayList<Node> open){
@@ -254,5 +257,5 @@ class NodeList{
 	    }
 	}
 	return minN;
-    }
+	}
 }
