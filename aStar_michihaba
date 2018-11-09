@@ -17,9 +17,9 @@ public class aStar{
 		"OOOOOO",
 		"OS   O",
 		"O OOOO",
-	    "O   GO",
-	    "OOOOOO",
-	};
+		"O   GO",
+		"OOOOOO",
+		};
 	
 	map_width = 0;
 	for (int i = 0; i < map_data.length; i++) {
@@ -49,63 +49,68 @@ public class aStar{
 class Node{
     public int[] pos = new int[2];
     public int hs, fs;
-	public Node parent_node;
-	public int michihaba;//new
-	int count1 = 1;//new
-	int count2 = 1;//new
+    public Node parent_node;
+    public int michihaba_left,michihaba_right;//new
+    public int michihaba_up,michihaba_down;
+    int count_left = 1;//new
+    int count_right = 1;//new
+    int count_up = 1;
+    int count_down = 1;
  
     // コンストラクタ
     public Node (int x, int y) {
         pos[0] = x;  
-	    pos[1] = y; 
+	pos[1] = y; 
         hs = (int)(Math.pow(x-aStar.goal[0],2) + Math.pow(y-aStar.goal[1],2));
         fs = 0;
-		parent_node = null;
+	parent_node = null;
 
-		// !NEW! michihaba
-		if (aStar.map[y][x] == 'O' || aStar.map[y][x] == 'X') {
-			michihaba = 0;
-		}else{
-			for (int i = x+1; i < aStar.map_width; i++) {
-				if (aStar.map[y][i] == 'O' || aStar.map[y][i] == 'X') {
-					continue;
-				}
-				count1++;
-			}
-			for (int k = x-1; k > -1; k--) {
-				if (aStar.map[y][k] == 'O' || aStar.map[y][k] == 'X') {
-					continue;
-				}
-				count1++;
-			}
-			for (int j = y+1; j < aStar.map_height; j++) {
-				if (aStar.map[j][x] == 'O' || aStar.map[j][x] == 'X') {
-					continue;
-				}
-				count2++;
-			}
-			for (int m = y-1; m > -1; m--) {
-				if (aStar.map[m][x] == 'O' || aStar.map[m][x] == 'X') {
-					continue;
-				}
-				count2++;
-			}
-			if (count1 > count2) {
-				michihaba = count2;
-			}else{
-				michihaba = count1;
-			}
+	// !NEW! michihaba
+	if (aStar.map[y][x] == 'O' || aStar.map[y][x] == 'X') {
+	    michihaba_left = 0;
+	    michihaba_right = 0;
+	    michihaba_up = 0;
+	    michihaba_down = 0;
+	}else{
+	    for (int i = x+1; i < aStar.map_width; i++) {
+		if (aStar.map[y][i] == 'O' || aStar.map[y][i] == 'X') {
+		    break;
 		}
-
+		count_right++;
+	    }
+	    for (int k = x-1; k > -1; k--) {
+		if (aStar.map[y][k] == 'O' || aStar.map[y][k] == 'X') {
+		    break;
+		}
+		count_left++;
+	    }
+	    for (int j = y+1; j < aStar.map_height; j++) {
+		if (aStar.map[j][x] == 'O' || aStar.map[j][x] == 'X') {
+		    break;
+		}
+		count_down++;
+	    }
+	    for (int m = y-1; m > -1; m--) {
+		if (aStar.map[m][x] == 'O' || aStar.map[m][x] == 'X') {
+		    break;
+		}
+		count_up++;
+	    }
+	    michihaba_left = count_left;
+	    michihaba_right = count_right;
+	    michihaba_up = count_up;
+	    michihaba_down = count_down;
+	}
+	
     }
-
+    
     // 現在地をゴールとするメソッド？
     public static boolean isGoal (Node n) {
-		if(n.pos[0] == aStar.goal[0] && n.pos[1] == aStar.goal[1]){	
-		    return true;
-		}else{
-	    	return false;
-		}
+	if(n.pos[0] == aStar.goal[0] && n.pos[1] == aStar.goal[1]){	
+	    return true;
+	}else{
+	    return false;
+	}
     }
 }
 
@@ -273,13 +278,11 @@ class NodeList{
 	// !NEW! michihaba
 	for (int i = 0; i < aStar.map_height; i++) {
 		for (int j = 0; j < aStar.map_width; j++){
-	   Node noooode = new Node(j,i);
-	   System.out.print(noooode.michihaba);
-		 }
-		 System.out.println();
+		    Node noooode = new Node(j,i);
+		    System.out.print(noooode.michihaba_down);
+		}
+		System.out.println();
 	}
-	System.out.println();
-    System.out.println("！謎の道幅2が発生！");
 	System.out.println();
 
 	// ルートとなるノードに印をつける
@@ -313,4 +316,3 @@ class NodeList{
 	return minN;
 	}
 
-}
