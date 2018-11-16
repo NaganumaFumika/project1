@@ -65,55 +65,55 @@ class Node{
     // コンストラクタ
     public Node (int x, int y) {
         pos[0] = x;  
-		pos[1] = y; 
+	pos[1] = y; 
         hs = (int)(Math.pow(x-aStar.goal[0],2) + Math.pow(y-aStar.goal[1],2));
         fs = 0;
-		parent_node = null;
-
-		// !NEW! michihaba
-		if (aStar.map[y][x] == '0' || aStar.map[y][x] == 'X') {
-			michihaba = 0;
-		}else{
-			for (int i = x+1; i < aStar.map_width; i++) {
-				if (aStar.map[y][i] == '0' || aStar.map[y][i] == 'X') {
-					break;
-				}
-				count1++;
-			}
-			for (int k = x-1; k > -1; k--) {
-				if (aStar.map[y][k] == '0' || aStar.map[y][k] == 'X') {
-					break;
-				}
-				count1++;
-			}
-			for (int j = y+1; j < aStar.map_height; j++) {
-				if (aStar.map[j][x] == '0' || aStar.map[j][x] == 'X') {
-					break;
-				}
-				count2++;
-			}
-			for (int m = y-1; m > -1; m--) {
-				if (aStar.map[m][x] == '0' || aStar.map[m][x] == 'X') {
-					break;
-				}
-				count2++;
-			}
-			if (count1 > count2) {
-				michihaba = count2;
-			}else{
-				michihaba = count1;
-			}
+	parent_node = null;
+	
+	// !NEW! michihaba
+	if (aStar.map[y][x] == '0' || aStar.map[y][x] == 'X') {
+	    michihaba = 0;
+	}else{
+	    for (int i = x+1; i < aStar.map_width; i++) {
+		if (aStar.map[y][i] == '0' || aStar.map[y][i] == 'X') {
+		    break;
 		}
-
+		count1++;
+	    }
+	    for (int k = x-1; k > -1; k--) {
+		if (aStar.map[y][k] == '0' || aStar.map[y][k] == 'X') {
+		    break;
+		}
+		count1++;
+	    }
+	    for (int j = y+1; j < aStar.map_height; j++) {
+		if (aStar.map[j][x] == '0' || aStar.map[j][x] == 'X') {
+		    break;
+		}
+		count2++;
+	    }
+	    for (int m = y-1; m > -1; m--) {
+		if (aStar.map[m][x] == '0' || aStar.map[m][x] == 'X') {
+		    break;
+		}
+		count2++;
+	    }
+	    if (count1 > count2) {
+		michihaba = count2;
+	    }else{
+		michihaba = count1;
+	    }
+	}
+	
     }
-
+    
     // 現在地をゴールとするメソッド？
     public static boolean isGoal (Node n) {
-		if(n.pos[0] == aStar.goal[0] && n.pos[1] == aStar.goal[1]){	
-		    return true;
-		}else{
-	    	return false;
-		}
+	if(n.pos[0] == aStar.goal[0] && n.pos[1] == aStar.goal[1]){	
+	    return true;
+	}else{
+	    return false;
+	}
     }
 }
 
@@ -121,7 +121,7 @@ class Node{
 class Astar_Map{
     ArrayList <Node> p_list = new ArrayList <Node> (); //path_list の list
     Astar_Map p_node;
-
+    
     Astar_Map(ArrayList<Node> close){
 	p_list = close;
 	p_node = null;
@@ -143,7 +143,7 @@ class NodeList{
     ArrayList <Integer> ngs_list = new ArrayList <Integer> (); //引数リス
     ArrayList <Node> path_list = new ArrayList <Node> ();
 	Astar_Map a_map; 
-	static int count = 0;	
+
 
     NodeList(){
 	start_node.fs = start_node.hs;
@@ -172,12 +172,15 @@ class NodeList{
 	}
 	return false;
     }
-    
+
     public void delete(ArrayList<Node> list,Node n){
 	int num = 0;
-	num = list.indexOf(n);
-	list.remove(num);
-    }
+	boolean judge = find(n.pos[0],n.pos[1],list);
+	if(judge){
+	    num = list.indexOf(n);
+	    list.remove(num);
+	}
+    }	
 
     //while True:以降の処理？
     public void help_search_path1(ArrayList<Node> open){//hikisuu
@@ -204,57 +207,36 @@ class NodeList{
 
 	    //new!	    
 	    if(Node.isGoal(n)){	    
-			end_node = n;
-			help_search_path2();
-
-			// 描画
-			Node noooode;
-			for (int i = 0; i < equal_list.size(); i++) {
-				noooode = equal_list.get(i);
-				System.out.print(noooode.pos[0]);
-				System.out.print(",");
-				System.out.println(noooode.pos[1]);
-			}
-			/*
-			noooode = equal_list.get(2);
-			System.out.print("now, node is ");
-			System.out.print(noooode.pos[0]);
-			System.out.print(",");
-			System.out.println(noooode.pos[1]);
-			System.out.print("my parent is ");
-			System.out.print(noooode.parent_node.pos[0]);
-			System.out.print(",");
-			System.out.println(noooode.parent_node.pos[1]);
-			*/
-
-			if(equal_list.size() == 0){
-		    	break;
-			}else{
-				new_start_node = equal_list.get(0);
-				close_list_change(new_start_node);
-				//delete(equal_list,equal_list.get(0));
-				equal_list.remove(0);
-		    	new_start_node.fs = ngs_list.get(0);
-			    ngs_list.remove(0);
-				new_open_list.add(new_start_node);  
-				
-				// 描画
-				System.out.println("new open_list is ");
-			Node noode;
-			for (int i = 0; i < new_open_list.size(); i++) {
-				noode = equal_list.get(i);
-				System.out.print(noode.pos[0]);
-				System.out.print(",");
-				System.out.println(noode.pos[1]);
-			}
-
-				
-
-
-			    help_search_path1(new_open_list);		    
-			}
+		end_node = n;
+		help_search_path2();
+		
+		equal_list_arrangement(equal_list);
+		/*
+		// 描画
+		System.out.println("arranged equal_list is ");
+		Node noooode;
+		for (int i = 0; i < equal_list.size(); i++) {
+		    noooode = equal_list.get(i);
+		    System.out.print(noooode.pos[0]);
+		    System.out.print(",");
+		    System.out.println(noooode.pos[1]);
+		    }*/
+		
+		if(equal_list.size() == 0){
+		    break;
+		}else{
+		    new_start_node = equal_list.get(0);
+		    close_list_change(new_start_node);
+		    delete(equal_list,equal_list.get(0));
+		    //equal_list.remove(0);
+		    // new_start_node.fs = ngs_list.get(0);
+		    ngs_list.remove(0);
+		    new_open_list.add(new_start_node);  
+		       
+		    help_search_path1(new_open_list);		    
+		}
 	    }
-
+	    
 	    n_gs = n.fs - n.hs; //火種になるかもよ！
 	    
 	    /*ノードnの移動可能方向のノードを調べる
@@ -263,15 +245,15 @@ class NodeList{
 		if(i==0){
 		    x = n.pos[0] + 1;
 		    y = n.pos[1] + 0;
-		   // naname = false;
+		    // naname = false;
 		}else if(i==1){
 		    x = n.pos[0] + -1;
 		    y = n.pos[1] + 0;
-		   // naname = false;
+		    // naname = false;
 		}else if (i==2){
 		    x = n.pos[0] + 0;
 		    y = n.pos[1] + 1;
-			// naname = false;
+		    // naname = false;
 		}else{
 		    x = n.pos[0] + 0;
 		    y = n.pos[1] + -1;
@@ -329,64 +311,96 @@ class NodeList{
     
     //new!
     public void help_search_path2(){
-		Node path = end_node.parent_node; 
-		path_list.add(end_node);	
-
-		// endノードから親を辿っていくと、最短ルートを示す.
-		for (int i = 0; i < aStar.map_height; i++) {
-	    	for (int j = 0; j < aStar.map_width; j++) {
-				newMap[i][j] = aStar.map[i][j];
-	    	}	
-		}
+	Node path = end_node.parent_node; 
+	path_list.add(end_node);	
 	
-		// ルートとなるノードに印をつける
-		while (true) {
-		    if (path.parent_node == null) break;
-	    	path_list.add(path);
-	    	newMap[path.pos[1]][path.pos[0]] = '+';
-	    	path = path.parent_node;
-		}
-
-		//new! マップ情報を格納・保持
-		/*
-		a_map = new Astar_Map(path_list);
-		a_map.p_node = a_map;
-		a_map = a_map.p_node;
-		path_list.clear();*/
-
-		// 描画
-		for (int i = 0; i < aStar.map_height; i++) {
-			for (int j = 0; j < aStar.map_width; j++) {
-			    String s = String.valueOf(newMap[i][j]);
-		    	System.out.print(s);
-			}
-			System.out.println();
-		}
+	// endノードから親を辿っていくと、最短ルートを示す.
+	for (int i = 0; i < aStar.map_height; i++) {
+	    for (int j = 0; j < aStar.map_width; j++) {
+		newMap[i][j] = aStar.map[i][j];
+	    }	
 	}
+	
+	// ルートとなるノードに印をつける
+	while (true) {
+	    if (path.parent_node == null) break;
+	    path_list.add(path);
+	    newMap[path.pos[1]][path.pos[0]] = '+';
+	    path = path.parent_node;
+	}
+	
+	//new! マップ情報を格納・保持
+	/*
+	  a_map = new Astar_Map(path_list);
+	  a_map.p_node = a_map;
+	  a_map = a_map.p_node;
+	  path_list.clear();*/
+	
+	// 描画
+	for (int i = 0; i < aStar.map_height; i++) {
+	    for (int j = 0; j < aStar.map_width; j++) {
+		String s = String.valueOf(newMap[i][j]);
+		System.out.print(s);
+	    }
+	    System.out.println();
+	    }
+    }
+    
+
+
+    public void equal_list_arrangement(ArrayList<Node> equal){
+	Node n;
+	Node parent;
+	ArrayList<Node> delete_list = new ArrayList<Node>();
+	
+
+	for(int i= 0;i<equal.size();i++){
+	    n = equal.get(i);
+	    parent = n.parent_node;
+	    while(true){
+		if(parent == null) break;
+		for(int j = 0;j<equal.size();j++){
+		    if(parent == equal.get(j)){
+			delete_list.add(equal.get(j));
+		    }
+		}
+		parent = parent.parent_node;
+	    }
+	}
+
+	for(int i =0;i<delete_list.size();i++){
+	    delete(equal_list,delete_list.get(i));
+	}
+    }
+
+
+
+
 
     //new!
     public void close_list_change(Node m){
-		Node n = m;
-
-		close_list.clear();
-		while(true){
-	   		if(n == null) break;
-	    	n = n.parent_node;
-	    	close_list.add(n);
-		}
-
-		// 描画
-		System.out.println("close list is ");
-		Node nodde;
-		for (int i = 0; i < close_list.size(); i++) {
-			nodde = equal_list.get(i);
-			System.out.print(nodde.pos[0]);
-			System.out.print(",");
-			System.out.println(nodde.pos[1]);
-		}
-
+	Node n = m;
+	
+	close_list.clear();
+	while(true){
+	    n = n.parent_node;
+	    if(n == null){
+		break;
+	    }
+	    close_list.add(n);
+	}
+	/*
+	// 描画
+	System.out.println("close list is ");
+	Node nodde;
+	for (int i = 0; i < close_list.size(); i++) {
+	    nodde = close_list.get(i);
+	    System.out.print(nodde.pos[0]);
+	    System.out.print(",");
+	    System.out.println(nodde.pos[1]);
+	    }*/
     }
-
+    
     //new!
     public void search_path(){
 	ArrayList<Integer> michihaba_width = new ArrayList<Integer>();
@@ -415,7 +429,6 @@ class NodeList{
 		max = michihaba_width.get(i);
 	    }
 	}
-
 	for(int i = 0;i<michihaba_width.size();i++){
 	    if(max == michihaba_width.get(i)){
 		count = i;
@@ -425,18 +438,15 @@ class NodeList{
 		}
 	    }
 	}
-
 	//map informatin making
 	for (int i = 0; i < aStar.map_height; i++) {
 	    for (int j = 0; j < aStar.map_width; j++) {
 		new_map[i][j] = aStar.map[i][j];
 	    }	
 	}
-
 	for(int i = 0;i<m2.p_list.size();i++){
 	    new_map[m2.p_list.get(i).pos[1]][m2.p_list.get(i).pos[0]] = '+';
 	}
-
 	System.out.println("新しい道幅考慮したマップ:");
 	for (int i = 0; i < aStar.map_height; i++) {
 	    String s = String.valueOf(new_map[i]);
@@ -461,29 +471,22 @@ class NodeList{
 			min = n.fs;
 	    }
 	}
-	/*
 	for(int i = 0;i<openM.size();i++){
 	    n = openM.get(i);
 	    if(n.fs == min && minN != n &&aStar.map[n.pos[1]][n.pos[0]] != 'S'){
-			for(int j = 0;j<equal_list.size();j++){
-				if(n.pos[0]==equal_list.get(j).pos[0] && n.pos[1]==equal_list.get(j).pos[1]){
-					flag2 = false;
-				}
-			}
-			if(flag2==true){
-				ngs = n.fs - n.hs;
-				equal_list.add(n);
-				ngs_list.add(ngs);
-			}
-
-		}*/
-		if(count==0){
-		n = new Node(9,4);
-		ngs = n.fs - n.hs;
-		equal_list.add(n);
-		ngs_list.add(ngs);
+	       	for(int j = 0;j<equal_list.size();j++){
+       		if(n.pos[0]==equal_list.get(j).pos[0] &&
+		   n.pos[1]==equal_list.get(j).pos[1]){
+		    flag2 = false;
 		}
-		count++;
+		}
+		if(flag2==true){
+		    ngs = n.fs - n.hs;
+		    equal_list.add(n);
+		    ngs_list.add(ngs);
+		}
+	    }
+	}
 	return minN;
 	}
 }
