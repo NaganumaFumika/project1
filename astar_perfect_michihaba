@@ -14,19 +14,20 @@ public class aStar{
 	Node node;
 	
 	String[] map_data = {
-	    "000000000000000000000000000000000000",
-	    "0         0000S0000        0    0  0",		
-	    "0         0000 0000  0000000  000000",
-	    "0         0000 0000  0000000  000000",
-	    "0                    0000000  000000",
-	    "0         000000000  00000000000   0",
-	    "0         000000000  00000000000   0",
-	    "0         000000000  00000000000   0",
-	    "0             G            0    0  0",
-	    "0  00000     0000      000000  0   0",
-	    "0  00000     0000       00000  0   0",
-	    "0  00000                  000      0",
-	    "000000000000000000000000000000000000",
+	    "000000000000000000000000000000000000000000",
+	    "0        S                 0000000    0  0",		
+	    "0         000    000       0000000  000000",
+	    "0         000    000       0000000  000000",
+	    "0         000    000       0000000  000000",
+	    "0                          0000000  000000",
+	    "0         000    000       00000000000   0",
+	    "0         000    000       00000000000   0",
+	    "0         000    000       00000000000   0",
+	    "0                   G            0    0  0",
+	    "0  00000  0000000            000000  0   0",
+	    "0  00000     0000             00000  0   0",
+	    "0  00000                        000      0",
+	    "000000000000000000000000000000000000000000",
 	};
 	
 	map_width = 0;
@@ -117,7 +118,7 @@ class Node{
     }
 }
 
-//new!
+//道幅考慮の際、最短経路を格納したArrayListを保持するためのクラス
 class Astar_Map{
     ArrayList <Node> p_list = new ArrayList <Node> (); 
     Astar_Map p_node;
@@ -186,7 +187,81 @@ class NodeList{
 	}
     }	
 
-    //while True:以降の処理？
+    //pythonにあってjavaにない関数の実装
+    public Node min(ArrayList<Node> openM){
+	Node minN = openM.get(0);
+	Node n;
+	int min = minN.fs;
+	int ngs = 0;
+	boolean flag2 = true;
+
+	for(int i = 0;i<openM.size();i++){
+	    n = openM.get(i);
+	    if(n.fs < min){
+			minN = n;
+			min = n.fs;
+	    }
+	}
+	for(int i = 0;i<openM.size();i++){
+	    n = openM.get(i);
+	    if(n.fs == min && minN != n &&aStar.map[n.pos[1]][n.pos[0]] != 'S'){
+	       	for(int j = 0;j<equal_list.size();j++){
+       		if(n.pos[0]==equal_list.get(j).pos[0] &&
+		   n.pos[1]==equal_list.get(j).pos[1]){
+		    flag2 = false;
+		}
+		}
+		if(flag2==true){
+		    ngs = n.fs - n.hs;
+		    equal_list.add(n);
+		    ngs_list.add(ngs);
+		}
+	    }
+	}
+	return minN;
+	}
+    
+    //equal_list内に同じ経路になりうる候補をここで消してる
+    public void equal_list_arrangement(ArrayList<Node> equal){
+	Node n;
+	Node parent;
+	ArrayList<Node> delete_list = new ArrayList<Node>();
+	
+
+	for(int i= 0;i<equal.size();i++){
+	    n = equal.get(i);
+	    parent = n.parent_node;
+	    while(true){
+		if(parent == null) break;
+		for(int j = 0;j<equal.size();j++){
+		    if(parent == equal.get(j)){
+			delete_list.add(equal.get(j));
+		    }
+		}
+		parent = parent.parent_node;
+	    }
+	}
+
+	for(int i =0;i<delete_list.size();i++){
+	    delete(equal_list,delete_list.get(i));
+	}
+    }
+
+    //2つ目以降の経路探索をする前にclose_listの中身を整理する関数
+    public void close_list_change(Node m){
+	Node n = m;
+	
+	close_list.clear();
+	while(true){
+	    n = n.parent_node;
+	    if(n == null){
+		break;
+	    }
+	    close_list.add(n);
+	}
+    }
+
+    //経路探索
     public void search_path(ArrayList<Node> open){//hikisuu
 	Node n;
 	Node v;//(2,1)
@@ -300,7 +375,7 @@ class NodeList{
 	}
     }
     
-    //new!
+    //最短経路の候補の経路を保存する関数
     public void help_search_path1(){
 	Node path = end_node.parent_node;
 	Astar_Map m;
@@ -323,49 +398,8 @@ class NodeList{
 	path_list.clear();
 	  
     }
-    
 
-
-    public void equal_list_arrangement(ArrayList<Node> equal){
-	Node n;
-	Node parent;
-	ArrayList<Node> delete_list = new ArrayList<Node>();
-	
-
-	for(int i= 0;i<equal.size();i++){
-	    n = equal.get(i);
-	    parent = n.parent_node;
-	    while(true){
-		if(parent == null) break;
-		for(int j = 0;j<equal.size();j++){
-		    if(parent == equal.get(j)){
-			delete_list.add(equal.get(j));
-		    }
-		}
-		parent = parent.parent_node;
-	    }
-	}
-
-	for(int i =0;i<delete_list.size();i++){
-	    delete(equal_list,delete_list.get(i));
-	}
-    }
-
-    //new!
-    public void close_list_change(Node m){
-	Node n = m;
-	
-	close_list.clear();
-	while(true){
-	    n = n.parent_node;
-	    if(n == null){
-		break;
-	    }
-	    close_list.add(n);
-	}
-    }
-    
-    //new!
+    //道幅が最も大きい道を通る経路を候補から選び出し、その経路を表示する関数
     public void help_search_path2(){
 	ArrayList<Integer> michihaba_width = new ArrayList<Integer>();
 	ArrayList<Astar_Map> arg = new ArrayList<Astar_Map>();
@@ -382,15 +416,17 @@ class NodeList{
 		haba += m1.p_list.get(i).michihaba;
 	    }
 	    michihaba_width.add(haba);
+	    haba = 0;
 	    m1 = m1.p_node;
 	}
 
 
 	max = michihaba_width.get(0);
 	for(int i = 0;i<michihaba_width.size();i++){
+	    System.out.println("michihaba:"+michihaba_width.get(i));
 	    if(max<michihaba_width.get(i)){
 		max = michihaba_width.get(i);
-		count = michihaba_width.size()-i-1;
+		count = i;
 	    }
 	}
 
@@ -417,37 +453,4 @@ class NodeList{
 
     }
     
-    //pythonにあってjavaにない関数の実装
-    public Node min(ArrayList<Node> openM){
-	Node minN = openM.get(0);
-	Node n;
-	int min = minN.fs;
-	int ngs = 0;
-	boolean flag2 = true;
-
-	for(int i = 0;i<openM.size();i++){
-	    n = openM.get(i);
-	    if(n.fs < min){
-			minN = n;
-			min = n.fs;
-	    }
-	}
-	for(int i = 0;i<openM.size();i++){
-	    n = openM.get(i);
-	    if(n.fs == min && minN != n &&aStar.map[n.pos[1]][n.pos[0]] != 'S'){
-	       	for(int j = 0;j<equal_list.size();j++){
-       		if(n.pos[0]==equal_list.get(j).pos[0] &&
-		   n.pos[1]==equal_list.get(j).pos[1]){
-		    flag2 = false;
-		}
-		}
-		if(flag2==true){
-		    ngs = n.fs - n.hs;
-		    equal_list.add(n);
-		    ngs_list.add(ngs);
-		}
-	    }
-	}
-	return minN;
-	}
 }
