@@ -433,7 +433,7 @@ public class P_astar_obs_fire extends JPanel{
 
 
 class Map {
-    public static int lx = 900, ly = 900;
+    public static int lx = 30, ly = 30;
     public char map[][];
     path p = new path();
 
@@ -514,7 +514,7 @@ class Map {
         }
 
 
-	for(int x=0; x<lx; x++) {
+	/*for(int x=0; x<lx; x++) {
 	    for(int y=0; y<ly; y++) {
 		for(int i=110; i<130; i++) {
 		map[i][y] = ' ';
@@ -572,7 +572,41 @@ class Map {
 		}
 	    }
 	}
-    }
+	}*/
+	
+		for(int x=0; x<30; x++) {
+			for(int y=0; y<30; y++) { 
+				map[3][y] = ' ';
+				map[9][y] = ' ';
+				map[15][y] = ' ';
+				map[x][4] = ' ';
+				map[x][10] = ' ';
+				map[x][19] = ' ';
+				map[x][23] = ' ';
+				map[x][25] = ' ';
+			if(10 <= y) {
+				map[5][y] = ' ';
+			}
+			if(10 <= y) {
+				map[3][y] = ' ';
+			}
+			if(9 <= x && x <= 15) {
+				map[x][13] = ' ';
+			}
+			if(4 <= y) {
+				map[22][y] = ' ';
+			}
+			if(x <= 22) {
+				map[x][7] = ' ';
+			}
+			if(19 <= y && y <= 25) {
+				map[18][y] = ' ';
+				}
+			}   
+		}
+	}
+
+
     public void draw(Graphics g) {
 	
         for (int x=0; x<lx; x++) {
@@ -1148,17 +1182,11 @@ class NodeList{
 
 	/*
         for (int i = 0; i < 900; i++) {
-
             for (int j = 0; j < 900; j++){
-
                 String s = String.valueOf(newMap[j][i]);//
-
                 System.out.print(s);
-
             }
-
             System.out.println();
-
         }
 	*/
 
