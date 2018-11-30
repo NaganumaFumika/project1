@@ -1,5 +1,14 @@
 // アルゴリズム班とシミュ班合体済み
 // 無限ループあり
+
+/*
+！お知らせ！
+二次元配列を取り扱う際は、
+map[y][x]
+というように、左をy座標、右をx座標として扱って下さい。
+このように扱わないとシミュレーションが上手く動かないバグが発生してしまうようです。
+お手数ですがよろしくお願いします。
+ */
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -14,45 +23,26 @@ import java.awt.RenderingHints;
 import java.util.Random;
 
 public class Project2 extends JPanel{
-
     Map map = new Map();
-
     Map.human user = map.new human();
-
     //Map.barrier obs = map.new barrier();
-
     Map.goal goal = map.new goal();
-
     Map.button fire = map.new button();
     Map.button tree = map.new button();
-
     int xl = map.lx;//maisuu  panel
-
     int yl = map.ly;//maisuu  panel
-
     int xn = 900/xl;//x no panel no nagasa
-
     int yn = 900/yl;//y no panel no nagasa
-
-    int n = 3;//user komi
-
+    int n = 1;//user komi
+    public static char[][] map_result = new char[30][30];
     ArrayList<Map.human> human = new ArrayList <Map.human>();
-
     ArrayList<Map> m = new ArrayList<Map>();
-
     ArrayList<aStar> as = new ArrayList <aStar>();
-
     ArrayList<Map.barrier> obs = new ArrayList <Map.barrier>();
 
-
     Project2 (){
-
 	human.add(user);
-
 	m.add(map);
-
-	
-
 	setOpaque(false);
 
 	fire.x = 920;
@@ -65,13 +55,10 @@ public class Project2 extends JPanel{
 
 
 	addMouseListener(new MouseAdapter() {
-
 		int i = 0;
-
 		int s_x, s_y, e_x, e_y;
 		boolean click_map = true;
 		char button_flag;
-
 
 		public void mouseClicked(MouseEvent e) {
 
@@ -79,90 +66,60 @@ public class Project2 extends JPanel{
 			if(0<=e.getX() && e.getX()<=900 && 0<=e.getY() && e.getY()<=900) {
 			    System.out.println("click");
 			    if(map.road(e.getX(),e.getY())){
-			        
 				if(i == 0){
 				    System.out.println("click i=0");    
-				    
 				    user.movehuman(e.getX()/xn*xn+xn/2,e.getY()/yn*yn+yn/2);
-				
 				    map.p.setxy(e.getX()/xn*xn+xn/2,e.getY()/yn*yn+yn/2);
-				    
-				    map.map[e.getX()/xn][e.getY()/yn] = 'S';
-				    
+				    map.map[e.getY()/yn][e.getX()/xn] = 'S';
 				    s_x = e.getX()/xn;
-				    
 				    s_y = e.getY()/yn;
-				    
 				    repaint();
-				    
 				    i = 1;
 				    
 				}else if( i == 1 ){
 				    //System.out.println("click i=1");	
 				    user.x_end = e.getX();
-				    
 				    user.y_end = e.getY();
-				    
 				    goal.x = e.getX();
-				    
 				    goal.y = e.getY();
-				    m.get(0).map[e.getX()/xn][e.getY()/yn] = 'G';
-				    
-				    
-				    
-				    map.map[s_x][s_y] = 'S';
-				    
+				    m.get(0).map[e.getY()/yn][e.getX()/xn] = 'G';
+				    map.map[s_y][s_x] = 'S';
 				    e_x = e.getX()/xn;
-				    
 				    e_y = e.getY()/yn;
 				    
-				    
 				    //make human & Map
-				    
 				    Random rnd = new Random();
-				    
 				    int x_rnd = 0;int y_rnd = 0;;
 				    
 				    for(int i = 1;i < n ;i++){
-				        
 					m.add(new Map());
-					
-					m.get(i).map[e.getX()/xn][e.getY()/yn] = 'G';
-					
+					m.get(i).map[e.getY()/yn][e.getX()/xn] = 'G';
 					while(true){
 					    x_rnd = rnd.nextInt(xl);
-					    
 					    y_rnd = rnd.nextInt(yl);
-					    
 					    if(m.get(i).road(x_rnd*xn , y_rnd*yn) == true ){
-						m.get(i).map[x_rnd][y_rnd] ='S';
+						m.get(i).map[y_rnd][x_rnd] ='S';
 						break;
-						
 					    }
-					    
 					}
-					
 					human.add(m.get(i).new human(x_rnd*xn+xn/2 , y_rnd*xn+xn/2));
-					
 				    }
-				    
-				    
-				    
+
 				    aStar as ;
 				    for (int i = 0;i<n ;i++){
-					
 					as = new aStar(m.get(i).map); 
-					
-				        
-					for(int a = 0;a < xl;a++){
-					    for(int b = 0;b < yl;b++){
-						m.get(i).map[a][b] = as.map_result[a][b];
+					for(int a = 0;a < yl;a++){
+					    for(int b = 0;b < xl;b++){
+						m.get(i).map[a][b] = map_result[a][b];
 					    }
-					    
 					}
-					
-				        
-				        
+					/*
+					//new!
+					for(int q=0;q<900;q++){
+					    String s = String.valueOf(m.get(0).map[q]);
+					    System.out.println(s);
+					    }*/
+
 					as = null;
 				    }
 				    
@@ -180,13 +137,13 @@ public class Project2 extends JPanel{
 				    
 				    //obs.y = e.getY();
 				    /*changeF*/
-				    for(int a=0; a<900; a++) {
-					for(int b=0; b<900; b++) {
+				    for(int b=0; b<900; b++) {
+					for(int a=0; a<900; a++) {
 					    if(a >= e.getX()-(obs.get(0).bl_x/2) && a <= e.getX()+(obs.get(0).bl_x/2) && b >= e.getY()-(obs.get(0).bl_y/2) && b <= e.getY()+(obs.get(0).bl_y/2)) {
 						// m.get(0).map[a/xn][b/yn] = 'X';
 						for(int k = 0;k<n;k++){
-						    m.get(k).map[a/xn][b/yn] = 'X';
-						    m.get(k).map[e_x][e_y] = 'G';
+						    m.get(k).map[b/yn][a/xn] = 'X';
+						    m.get(k).map[e_y][e_x] = 'G';
 						    //System.out.println("obs");
 						}
 					    }
@@ -199,41 +156,25 @@ public class Project2 extends JPanel{
 				    /*changeF*/
 				    
 				    repaint();
-				    
-				    
 				    for(int k = 0; k<n;k++){
-				        
 					for(int i=0; i<xl; i++) {
-					    
 					    for(int j=0; j<yl; j++) {
-					        
-						if(m.get(k).map[i][j] == '+' || m.get(k).map[i][j] == 'S') {
-						    
-						    m.get(k).map[i][j] = ' ';
-						    
+						if(m.get(k).map[j][i] == '+' || m.get(k).map[j][i] == 'S') {
+						    m.get(k).map[j][i] = ' ';
 						}
-					        
 					    }
-					    
 					}
 				    }
 				    
-				    
-				    
 				    aStar as;
 				    for (int k = 0;k<n;k++){
-				        
-					m.get(k).map[human.get(k).x_now/xn][human.get(k).y_now/yn] = 'S';
-				        
+					m.get(k).map[human.get(k).y_now/yn][human.get(k).x_now/xn] = 'S';
 					as =  new aStar(m.get(k).map) ;
-					for(int a = 0;a < xl;a++){
-					    for(int b = 0;b < yl;b++){
-						m.get(k).map[a][b] = as.map_result[a][b];
+					for(int a = 0;a < yl;a++){
+					    for(int b = 0;b < xl;b++){
+						m.get(k).map[a][b] = map_result[a][b];
 					    }
-					    
 					}
-				        
-				        
 				    }
 				    i = 2; //changeF
 				
@@ -257,8 +198,7 @@ public class Project2 extends JPanel{
 				if(i==3) {
 				    for(int k = 0;k<n;k++){
 					if(m.get(k).build(e.getX(),e.getY())){
-					    
-					    m.get(k).map[e.getX()/xn][e.getY()/yn] = 'F';
+					    m.get(k).map[e.getY()/yn][e.getX()/xn] = 'F';
 					}
 				    }
 				    click_map = false;
@@ -296,100 +236,53 @@ public class Project2 extends JPanel{
 		
 	    });
 
-	
-
 	new javax.swing.Timer(1, new ActionListener(){
-
 		public void actionPerformed(ActionEvent evt){
-		       
 
 		    //change niimi
 		    for(int k = 0; k < m.size(); k++ ){
-			
 			m.get(k).fire(5);
 		    }
-		        
 		    for(int t = 0 ; t < human.size(); t++){
-
 			int xm = human.get(t).x_now/xn;
-			
-
 			int ym = human.get(t).y_now/yn;
-			
-			
-
-
 			if((human.get(t).x_now-xn/2)%xn == 0 && (human.get(t).y_now-yn/2)%yn == 0){
-			    
 			    int i = 0;
-
-			    m.get(t).map[xm][ym] = ' ';
-			    
-
+			    m.get(t).map[ym][xm] = ' ';
 			    for(int x= -1; x < 2 ; x++ ){
-				
-				if (xm + x > -1&& xm + x < xl){
-
+				if (xm + x > -1&& xm + x < xl){				
 				    for(int y = -1; y < 2; y++){
-
 					if (ym + y > -1 &&  ym + y < yl){
-					    
-
-					    if(x == 0 || y == 0){ //
-
-						if(m.get(t).map[xm+x][ym+y] == '+'||m.get(t).map[xm+x][ym+y] == 'G' ){
+					    if(x == 0 || y == 0){ 					    						if(m.get(t).map[ym+y][xm+x] == '+'||m.get(t).map[ym+y][xm+x] == 'G' ){
 						    //System.out.println(t);
-
 						    human.get(t).vx = x; human.get(t).vy = y; i = 1;
-
 						    human.get(t).movehuman(human.get(t).x_now+human.get(t).vx ,human.get(t).y_now + human.get(t).vy);
 						    if(t ==  0){
-
 							m.get(t).p.setxy(human.get(t).x_now+human.get(t).vx ,human.get(t).y_now + human.get(t).vy);
 						    }
-
 						    repaint();
-
 						    break;
-
 						}
 						if(i == 0&&y==1&&x==1){
-
 						    human.get(t).vx = 0;human.get(t).vy = 0; break;
-
 						}
-
-					    } //  
-
+					    }  
 					}
-
 				    }
-
 				}
-
 			    }
-
 			}else{
-
 			    human.get(t).movehuman(human.get(t).x_now + human.get(t).vx ,human.get(t).y_now + human.get(t).vy);
 			    if(t == 0){
-
 				m.get(t).p.setxy(human.get(t).x_now+human.get(t).vx ,human.get(t).y_now + human.get(t).vy);
 			    }
-
 			    //repaint();
-
 			}
-
 		    }
-
 		}
-
 	    }).start(); 
-
     }
 
-    
     @Override
 	public void paintComponent(Graphics g){
 
@@ -398,22 +291,14 @@ public class Project2 extends JPanel{
 	tree.draw(g);
 
 	if((user.x_now!=0) &&(user.y_now!=0)) {
-
 	    user.draw(g);
-
 	    for(int i = 1 ;i<human.size();i++){
-
 		human.get(i).drawhuman(g);
 	    }
-
 	}
 
-
-
 	if((user.x_end!=0) &&(user.y_end!=0)) {
-
 	    goal.draw(g);
-
 	}
 	/*changeF*/
 	for(int i=0; i<obs.size(); i++) {
@@ -429,21 +314,13 @@ public class Project2 extends JPanel{
     public static void main(String[] args) {
 
 	JFrame fr = new JFrame("map");
-
 	fr.setSize(1100, 900);
-
 	fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 	fr.getContentPane().setBackground(new Color(255, 255, 255));
-
         Project2 pr =new Project2();
-
         pr.setOpaque(false);
-
 	fr.add(pr);
-
 	fr.setVisible(true);
-
     }
 
 }
@@ -452,7 +329,7 @@ public class Project2 extends JPanel{
 
 
 class Map extends JPanel{
-    public static int lx = 900, ly = 900;
+    public static int lx = 30, ly = 30;
     public char map[][];
     path p = new path();
 
@@ -466,21 +343,21 @@ class Map extends JPanel{
     private BufferedImage barrierImg;
 
 
-    public int bl_x = 20;
-    public int bl_y = 20;
+    public int bl_x = 5;
+    public int bl_y = 5;
     /*changeF*/
 
     public boolean road(int x, int y){
         int xm = x/pix_x;
         int ym = y/pix_y;
-        if(map[xm][ym] == ' '|| map[xm][ym] == '+'){return true;}else{return false;}
+        if(map[ym][xm] == ' '|| map[ym][xm] == '+'){return true;}else{return false;}
     }
     
     //change niimi
     public boolean build(int x, int y){
         int xm = x/pix_x;
         int ym = y/pix_y;
-        if(map[xm][ym] == '0' ){return true;}else{return false;}
+        if(map[ym][xm] == '0' ){return true;}else{return false;}
     }
     
     //change niimi
@@ -492,9 +369,9 @@ class Map extends JPanel{
 	    int yabakyori = 50;
 	       
 	       
-	    for (int x=0; x<lx; x++) {
-		for (int y=0; y<ly; y++) {
-		    if(map[x][y] == 'F'){ f_x.add(x);f_y.add(y);}
+	    for (int y=0; y<ly; y++) {
+		for (int x=0; x<lx; x++) {
+		    if(map[y][x] == 'F'){ f_x.add(x);f_y.add(y);}
 		}
 	    }
 	       
@@ -503,8 +380,8 @@ class Map extends JPanel{
 		    for(int y = -1*yabakyori; y < yabakyori; y++){
 			if (f_x.get(i) + x > -1&& f_x.get(i) + x < lx){
 			    if (f_y.get(i) + y > -1 &&  f_y.get(i) + y < ly){
-				if(map[f_x.get(i)+x][f_y.get(i)+y]==' '){
-				    map[f_x.get(i)+x][f_y.get(i)+y]='P';
+				if(map[f_y.get(i)+y][f_x.get(i)+x]==' '){
+				    map[f_y.get(i)+y][f_x.get(i)+x]='P';
 				}
 			    }
 			}
@@ -518,8 +395,8 @@ class Map extends JPanel{
 		    for(int y = -1; y < 2; y++){
 			if (f_x.get(i) + x > -1&& f_x.get(i) + x < lx){
 			    if (f_y.get(i) + y > -1 &&  f_y.get(i) + y < ly){
-				if(map[f_x.get(i)+x][f_y.get(i)+y]=='0'){
-				    map[f_x.get(i)+x][f_y.get(i)+y]='F';
+				if(map[f_y.get(i)+y][f_x.get(i)+x]=='0'){
+				    map[f_y.get(i)+y][f_x.get(i)+x]='F';
 				}
 			    }
 			}
@@ -532,72 +409,105 @@ class Map extends JPanel{
     }
 
     public Map(){
-	this.map = new char[lx][ly];
+	this.map = new char[ly][lx];
 	
-	for (int x=0; x<lx; x++) {
-	    for (int y=0; y<ly; y++) {
-		map[x][y] = '0';
+	for (int y=0; y<ly; y++) {
+	    for (int x=0; x<lx; x++) {
+		map[y][x] = '0';
 	    }
 	}
 	
 	
-	for(int x=0; x<lx; x++) {
+	/*for(int x=0; x<lx; x++) {
 	    for(int y=0; y<ly; y++) {
 		for(int i=110; i<130; i++) {
-		    map[i][y] = ' ';
+		    map[y][i] = ' ';
 		}
 		for(int i=270; i<285; i++) {
-		    map[i][y] = ' ';
+		    map[y][i] = ' ';
 		}
 		for(int i=450; i<460; i++) {
-		    map[i][y] = ' ';
+		    map[y][i] = ' ';
 		}
 		for(int i=100; i<120; i++) {
-		    map[x][i] = ' ';
+		    map[i][x] = ' ';
 		}
 		for(int i=300; i<350; i++) {
-		    map[x][i] = ' ';
+		    map[i][x] = ' ';
 		}
 		for(int i=370; i<400; i++) {
-		    map[x][i] = ' ';
+		    map[i][x] = ' ';
 		}
 		for(int i=650; i<670; i++) {
-		    map[x][i] = ' ';
+		    map[i][x] = ' ';
 		}
 		for(int i=770; i<780; i++) {
-		    map[x][i] = ' ';
+		    map[i][x] = ' ';
 		}
 		if(110<=y) {
 		    for(int i=90; i<120; i++) {
-			map[i][y] = ' ';
+			map[y][i] = ' ';
 		    }
 		}
 		if(100<=y) {
 		    for(int i=150; i<165; i++) {
-			map[i][y] = ' ';
+			map[y][i] = ' ';
 		    }
 		}
 		if(x<=450){
 		    for(int i=390; i<420; i++){
-			map[x][i] = ' ';
+			map[i][x] = ' ';
 		    }
 		}
 		if(120 <= y){
 		    for(int i=660; i<750; i++){
-			map[i][y] = ' ';
+			map[y][i] = ' ';
 		    }
 		}
 		if(x<=660) {
 		    for(int i=200; i<225; i++){
-			map[x][i] = ' ';
+			map[i][x] = ' ';
 		    }
 		}
 		if(370<=y && y<=780){
 		    for(int i=540; i<555; i++){
-			map[i][y] = ' ';
+			map[y][i] = ' ';
 		    }
 		}
-	    }
+		}*/
+		
+		for(int x=0; x<30; x++) {
+			for(int y=0; y<30; y++) { 
+			map[3][y] = ' ';
+			map[4][y] = ' ';
+			map[9][y] = ' ';
+			map[15][y] = ' ';
+			map[x][4] = ' ';
+			map[x][10] = ' ';
+			map[x][19] = ' ';
+			map[x][20] = ' ';
+			map[x][23] = ' ';
+			map[x][25] = ' ';
+			if(10 <= y) {
+				map[5][y] = ' ';
+			}
+			if(10 <= y) {
+				map[3][y] = ' ';
+			}
+			if(9 <= x && x <= 15) {
+				map[x][13] = ' ';
+			}
+			if(4 <= y) {
+				map[22][y] = ' ';
+				map[23][y] = ' ';
+			}
+					if(x <= 22) {
+				map[x][7] = ' ';
+			}
+			if(19 <= y && y <= 25) {
+				map[18][y] = ' ';
+			}
+			}   
 	}
 
 	try{
@@ -612,12 +522,12 @@ class Map extends JPanel{
 	
         for (int x=0; x<lx; x++) {
             for (int y=0; y<ly; y++) {
-                if(map[x][y] == 'S' || map[x][y] == 'G' || map[x][y] == ' ' || map[x][y] == '+' ||map[x][y] == 'X' ) {
+                if(map[y][x] == 'S' || map[y][x] == 'G' || map[y][x] == ' ' || map[y][x] == '+' ||map[y][x] == 'X' ) {
                     g.setColor(Color.white);
                     g.fillRect(x*pix_x, y*pix_y, pix_x, pix_y);
 		    /*changeF*/
                     //g.setColor(Color.black);
-                    if(map[x][y] =='X'){
+                    if(map[y][x] =='X'){
                         //g.drawLine(x*pix_x, y*pix_y, (x+1)*pix_x, (y+1)*pix_y);
                         //g.drawLine((x+1)*pix_x, y*pix_y, x*pix_x, (y+1)*pix_y);
 			//g.drawImage(barrierImg, x-10, y-10, 20, 20, null);
@@ -625,16 +535,16 @@ class Map extends JPanel{
 		    }
 		    /*changeF*/
                 }
-                if(map[x][y] == '0') {
+                if(map[y][x] == '0') {
                     g.setColor(new Color(200,200,200));
                     g.fillRect(x*pix_x, y*pix_y, pix_x, pix_y);
                 }
 		//change niimi
-		if(map[x][y] == 'F'){
+		if(map[y][x] == 'F'){
 		    g.setColor(Color.red);
 		    g.fillRect(x*pix_x, y*pix_y, pix_x, pix_y);
 		}
-		if(map[x][y] == 'P'){
+		if(map[y][x] == 'P'){
 		    g.setColor(Color.yellow);
 		    g.fillRect(x*pix_x, y*pix_y, pix_x, pix_y);
 		}
@@ -658,7 +568,7 @@ class Map extends JPanel{
 	    
             for(int i=0; i<lx; i++) {
                 for(int j=0; j<ly; j++) {
-                    if(map[i][j] == '+' || map[i][j] == 'G') {
+                    if(map[j][i] == '+' || map[j][i] == 'G') {
                         g.fillRect(i*pix_x, j*pix_y, pix_x, pix_y);
                     }
                 }
@@ -666,86 +576,47 @@ class Map extends JPanel{
         }
     }
     
-    
-    
-    
-    
-    
     class human {
 	int x_now = 0;
-	
 	int y_now = 0;
-	
 	int x_end = 0;
-	
 	int y_end = 0;
-	
 	int vx = 0;
-	
 	int vy = 0;
-	
-	
-	
+
 	human(){}
 	
 	human(int x_n,int y_n){
-	    
 	    x_now = x_n;
-			    
 	    y_now = y_n;
-	    
-	    
-	    
 	}
 		    
 	public void movehuman(int x , int y){
-	    
 	    x_now = x; y_now = y;
-	    
 	}
 	
-	
-	
 	public void draw(Graphics g){
-	    
 	    g.setColor(Color.red);
-	    
 	    g.fillOval(x_now-5,y_now-5,10,10);
-	    
 	}    
 	public void drawhuman(Graphics g){
-	    
 	    g.setColor(Color.blue);
-	    
 	    g.fillOval(x_now-5,y_now-5,10,10);
-	    
 	}
     }
     
     class goal {
-	
 	int x = 0;
-	
 	int y = 0;
-	
 	int xm = 0;
-	
 	int ym = 0;
-	
-	
-	
+
 	public void draw(Graphics g) {
-	    
 	    g.setColor(Color.green);
-	    
 	    xm = x/30;
-	    
 	    ym = y/30;
-	    
 	    g.fillOval(xm*30, ym*30, 30, 30);
-	    
 	}
-	
     }
     
     /*changeF*/
@@ -766,7 +637,6 @@ class Map extends JPanel{
 	public void draw(Graphics g) {
 	    g.setColor(new Color(200,200,200));
 	    g.fillRect(x,y,60,30);
-
 	    g.setColor(Color.black);
 	    g.drawRect(x,y,60,30);
 	    g.drawString(name, x+18, y+18);
@@ -780,7 +650,7 @@ class aStar{
     public static char[][] aStarmap;
     public static int[] start = new int[2];
     public static int[] goal = new int[2];
-    public  static char[][] map_result = new char[30][30];
+    public  static char[][] result = new char[map_height][map_width];
    
     public aStar(char[][] niimimap){
         this.aStarmap = niimimap; 
@@ -799,7 +669,7 @@ class aStar{
             }
         }
         NodeList nodelist = new NodeList();
-        map_result = nodelist.result;
+	//   map_result = nodelist.result;
     }   
 }
 
@@ -810,9 +680,9 @@ class Node{
     public Node parent_node;
     public int michihaba;//new
     public int risk;//危険度
-	int count1 = 1;//new
-	int count2 = 1;//new
- 
+    int count1 = 1;//new
+    int count2 = 1;//new
+    
     // コンストラクタ
     public Node (int x, int y) {
         pos[0] = x;  
@@ -1032,7 +902,8 @@ class NodeList{
 	while(true){
 	    if(open.size() == 0){
 		System.out.println("There is no route until reaching a goal.");
-		System.exit(1);
+		help_search_path2();
+		break;
 	    }
 
 	    n = min(open);
@@ -1041,10 +912,10 @@ class NodeList{
 
 	    //new!	    
 	    if(Node.isGoal(n)){	    
-		end_node = n;
+			end_node = n;
 	       	help_search_path1();
-		cycle_num++;
-		equal_list_arrangement(equal_list);
+			cycle_num++;
+			equal_list_arrangement(equal_list);
 		if(equal_list.size() == 0){
 		    System.out.println("探索終了!");
 		    help_search_path2();
@@ -1063,7 +934,7 @@ class NodeList{
 	    
 	    /*ノードnの移動可能方向のノードを調べる
 	      for v in ((1,0),(-1,0),(0,1),(0,-1)):*/
-	    for(int i=0;i<8;i++){
+	    for(int i=0;i<4;i++){
 		if(i==0){
 		    x = n.pos[0] + 1;
 		    y = n.pos[1] + 0;
@@ -1101,7 +972,7 @@ class NodeList{
 		/*マップが範囲外または壁(0)の場合はcontinue*/
 		if (y <= 0 || y >= aStar.map_height ||
 		    x <= 0 || x >= aStar.map_width ||
-		    (aStar.aStarmap[y][x] == '0')) {
+		    (aStar.aStarmap[y][x] == '0'||aStar.aStarmap[y][x] == 'X')) {
 		    continue;
 		}
 		
@@ -1188,7 +1059,7 @@ class NodeList{
 
 	while(true){
 	    if(m1 ==null) break;
-	    for(int i=0;i<a_map.p_list.size();i++){
+	    for(int i=0;i<m1.p_list.size();i++){
 		haba += m1.p_list.get(i).michihaba;
 		danger += m1.p_list.get(i).risk;
 	    }
@@ -1229,21 +1100,31 @@ class NodeList{
 	    for (int j = 0; j < aStar.map_width; j++) {
 		result[i][j] = aStar.aStarmap[i][j];
 	    }
+	}
+		
+	  for (int i = 0; i < aStar.map_height; i++) {
+	    String s = String.valueOf(result[i]);
+	    System.out.println(s);
 	}	
 	
 	for(int i = 0;i<m2.p_list.size();i++){
 	    result[m2.p_list.get(i).pos[1]][m2.p_list.get(i).pos[0]] = '+';
 	}
-	
+
+	for (int i = 0; i < aStar.map_height; i++) {
+	    for (int j = 0; j < aStar.map_width; j++) {
+		Project2.map_result[i][j] = result[i][j];
+	    }
+	}		
+
 	/*
 	  System.out.println("新しい道幅考慮したマップ:");
 	  for (int i = 0; i < aStar.map_height; i++) {
-	    String s = String.valueOf(new_map[i]);
+	    String s = String.valueOf(result[i]);
 	    System.out.println(s);
-	}
-	*/
+	    }*/
+	
 
 
     }
-    
 }
