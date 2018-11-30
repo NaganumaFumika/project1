@@ -1,5 +1,4 @@
 // アルゴリズム班とシミュ班合体済み
-// 無限ループあり
 
 /*
 ！お知らせ！
@@ -772,8 +771,8 @@ class NodeList{
     ArrayList <Node> path_list = new ArrayList <Node> ();
     char[][] result = new char[aStar.map_height][aStar.map_width];
     Astar_Map a_map; 
-    int cycle_num = 1;
-
+	int cycle_num = 1;
+	int min_path;
 
     NodeList(){
 	start_node.fs = start_node.hs;
@@ -1030,16 +1029,23 @@ class NodeList{
 	    path = path.parent_node;
 	}
 
-	//new! マップ情報を格納・保持
-	m = new Astar_Map(path_list);
 	if(cycle_num == 1){
-	    a_map = m;
+		min_path = path_list.size();
+		m = new Astar_Map(path_list);
+		a_map = m;
 	}else{
-	    m.p_node = a_map;
-	    a_map = m;
+		if(min_path<path_list.size()){
+			//min_pathより大きい時は格納しない
+			return;
+		}else{
+			//マップ情報を格納・保持
+			m = new Astar_Map(path_list);
+			m.p_node = a_map;
+			a_map = m;
+		}
 	}
-	path_list.clear();
-	  
+	path_list.clear();  
+
     }
 
     //道幅が最も大きい道を通る経路を候補から選び出し、その経路を表示する関数
