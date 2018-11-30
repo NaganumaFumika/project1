@@ -1025,7 +1025,7 @@ class NodeList{
 
 	while(true){
 	    if(m1 ==null) break;
-	    for(int i=0;i<a_map.p_list.size();i++){
+	    for(int i=0;i<m1.p_list.size();i++){
 		haba += m1.p_list.get(i).michihaba;
 		danger += m1.p_list.get(i).risk;
 	    }
