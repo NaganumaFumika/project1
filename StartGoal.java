@@ -245,10 +245,10 @@ class NodeList{
         
         if (find(sn.pos[0],sn.pos[1],close_list2)) {
         end_node = sn;
-        help_search_path1(); /////たぶんここが違う
+        help_search_path1(); /////たぶんここ違う？？
         } else if (find(gn.pos[0],gn.pos[1],close_list1)) {
             end_node = gn;
-            help_search_path1(); /////たぶんここが違う
+            help_search_path1(); /////たぶんここ違う？？
         }
         
         search(sn,open1,1); /////
