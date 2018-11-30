@@ -15,7 +15,7 @@ public class StartGoal{
     public static void main (String[] args) {
 	
 	String[] map_data = {
-    "000000000000000000000000000000000000",
+        "000000000000000000000000000000000000",
     "0         0000S0000        0    0  0",		
     "0         0000 0000  0000000  000000",
     "0         0000 0000  0000000  000000",
@@ -57,8 +57,8 @@ public class StartGoal{
 // Nodeクラス
 class Node{
     public int[] pos = new int[2];
-    public int Shs, Sfs;
-    public int Ghs, Gfs;
+    public int Shs, Sfs; /////
+    public int Ghs, Gfs; /////
 	public Node Sparent_node, Gparent_node; /////
 	public int michihaba;//new
 	int count1 = 1;//new
@@ -68,12 +68,12 @@ class Node{
     public Node (int x, int y) {
         pos[0] = x;  
         pos[1] = y; 
-        Shs = (int)(Math.pow(x-StartGoal.goal[0],2) + Math.pow(y-StartGoal.goal[1],2));
-        Sfs = 0;
+        Shs = (int)(Math.pow(x-StartGoal.goal[0],2) + Math.pow(y-StartGoal.goal[1],2)); /////
+        Sfs = 0; /////
         Ghs = (int)(Math.pow(x-StartGoal.start[0],2) + Math.pow(y-StartGoal.start[1],2));; /////
-        Gfs = 0;
-        Sparent_node = null;
-        Gparent_node = null;
+        Gfs = 0; /////
+        Sparent_node = null; /////
+        Gparent_node = null; /////
      
 	// !NEW! michihaba
 	if (StartGoal.map[y][x] == '0' || StartGoal.map[y][x] == 'X') {
@@ -114,11 +114,11 @@ class Node{
     
     // 現在地をゴールとするメソッド
     public static boolean isGoal (Node n) {
-	if(n.pos[0] == StartGoal.goal[0] && n.pos[1] == StartGoal.goal[1]){	
-	    return true;
-	}else{
-	    return false;
-	}
+	    if(n.pos[0] == StartGoal.goal[0] && n.pos[1] == StartGoal.goal[1]){	
+	        return true;
+	    }else{
+	        return false;
+	    }
     }
 
 }
@@ -140,10 +140,10 @@ class Astar_Map{
 
 class NodeList{
     char[][] newMap = new char[StartGoal.map_height][StartGoal.map_width];
-    ArrayList <Node> open_list1 = new ArrayList <Node> (); 
-    ArrayList <Node> close_list1 = new ArrayList <Node> (); 
-    ArrayList <Node> open_list2 = new ArrayList <Node> ();  /////
-    ArrayList <Node> close_list2 = new ArrayList <Node> (); 
+    ArrayList <Node> open_list1 = new ArrayList <Node> (); /////
+    ArrayList <Node> close_list1 = new ArrayList <Node> (); /////
+    ArrayList <Node> open_list2 = new ArrayList <Node> (); /////
+    ArrayList <Node> close_list2 = new ArrayList <Node> (); /////
     Node start_node = new Node(StartGoal.start[0],StartGoal.start[1]);
     Node goal_node = new Node(StartGoal.goal[0],StartGoal.goal[1]); /////
     Node end_node; 
@@ -157,50 +157,50 @@ class NodeList{
 
 
     NodeList(){
-    start_node.Sfs = start_node.Shs;
+    start_node.Sfs = start_node.Shs; /////
     goal_node.Gfs = goal_node.Ghs; /////
-    open_list1.add(start_node);
-    open_list2.add(goal_node);
-	search_path(open_list1, open_list2);
+    open_list1.add(start_node); /////
+    open_list2.add(goal_node); /////
+	search_path(open_list1, open_list2); /////
     }
 
     public Node findN(int xP,int yP,ArrayList<Node> list){
-	Node node;
-	for(int i = 0;i<list.size();i++){
-	    node = list.get(i);
-	    if(node.pos[0] == xP && node.pos[1] == yP){
-		return node;
+	    Node node;
+	    for(int i = 0;i<list.size();i++){
+	        node = list.get(i);
+	        if(node.pos[0] == xP && node.pos[1] == yP){
+		        return node;
+	        }
 	    }
-	}
-	return null;
+	    return null;
     }
 
     public boolean find(int xP,int yP,ArrayList<Node> list){
-	Node node;
-	for(int i = 0;i<list.size();i++){
-	    node = list.get(i);
-	    if(node.pos[0] == xP && node.pos[1] == yP){
-		return true;
+        Node node;
+	    for(int i = 0;i<list.size();i++){
+            node = list.get(i);
+	        if(node.pos[0] == xP && node.pos[1] == yP){
+		        return true;
+	        }
 	    }
-	}
-	return false;
+	    return false;
     }
 
     public void delete(ArrayList<Node> list,Node n){
-	int num = 0;
-	boolean judge = find(n.pos[0],n.pos[1],list);
-	if(judge){
-	    num = list.indexOf(n);
-	    list.remove(num);
-	}
+	    int num = 0;
+	    boolean judge = find(n.pos[0],n.pos[1],list);
+	    if(judge){
+	        num = list.indexOf(n);
+	        list.remove(num);
+	    }
     }	
 
     //while True:以降の処理？
     public void search_path(ArrayList<Node> open1, ArrayList<Node> open2){ /////
-	Node sn, gn;
-	//Node v;
+	Node n;
 	Node new_start_node;
-	ArrayList <Node> new_open_list = new ArrayList <Node> (); //引数リスト
+    ArrayList <Node> new_open_list = new ArrayList <Node> (); //引数リスト
+    ArrayList <Node> parent_list = new ArrayList <Node> (); /////
     /*int dist,n_gs;
 	boolean flag;
 	int x = 0;
@@ -213,21 +213,17 @@ class NodeList{
         return;
 	    }
 
-	    sn = minS(open1);
-	    delete(open1,sn);
-        close_list1.add(sn); 
-        //System.out.print("S:(" + sn.pos[0] + "," + sn.pos[1] + ") ");
-        gn = minG(open2); /////
-	    delete(open2,gn);
-        close_list2.add(gn); 
-        //System.out.println("G:(" + gn.pos[0] + "," + gn.pos[1] + ")");
+	    n = minS(open1); /////
+	    delete(open1,n);
+        close_list1.add(n); 
+        System.out.println("sn:(" + n.pos[0] + "," + n.pos[1] + ") ");
 
         /*	    
-	    if(Node.isGoal(sn)){	    
-		    end_node = sn;
+	    if(Node.isGoal(n)){	    
+		    end_node = n;
 	       	help_search_path1();
-		cycle_num++;
-		equal_list_arrangement(equal_list);
+		    cycle_num++;
+		    equal_list_arrangement(equal_list);
 		if(equal_list.size() == 0){
 		    System.out.println("探索終了!");
 		    help_search_path2();
@@ -243,20 +239,73 @@ class NodeList{
 		}
         }*/
         
-        if (find(sn.pos[0],sn.pos[1],close_list2)) {
-        end_node = sn;
-        help_search_path1(); /////たぶんここ違う？？
-        } else if (find(gn.pos[0],gn.pos[1],close_list1)) {
-            end_node = gn;
-            help_search_path1(); /////たぶんここ違う？？
+        Node z2 = minG(open2);  /////↓ここから
+        //if (z2.Gparent_node != null) System.out.println("gparent:(" + z2.Gparent_node.pos[0] + "," + z2.Gparent_node.pos[1] + ")");
+        while (z2 != null) {
+            parent_list.add(z2);
+            z2 = z2.Gparent_node;
         }
+        if (find(n.pos[0],n.pos[1],parent_list)) {
+            end_node = n;
+            System.out.println("sp("+end_node.pos[0]+","+end_node.pos[1]+")");
+            help_search_path1(); /////たぶんここが違う
+            cycle_num++;
+		    equal_list_arrangement(equal_list);
+        if(equal_list.size() == 0){
+		    System.out.println("探索終了!");
+		    help_search_path2();
+            //System.exit(1);
+            return;
+		}else{
+		    new_start_node = equal_list.get(equal_list.size()-1);
+		    close_list_change(new_start_node);
+		    delete(equal_list,equal_list.get(equal_list.size()-1));
+		    new_open_list.add(new_start_node);  		       
+            search_path(new_open_list, new_open_list);		    /////ここ違う
+            return;
+		} 
+        } 
+        parent_list.clear();
         
-        search(sn,open1,1); /////
-        search(gn,open2,0);
-	}
-    }
+        search(n,open1,1);
 
-    public void search (Node n, ArrayList<Node> list, int a) { /////
+        n = minG(open2);
+	    delete(open2,n);
+        close_list2.add(n); 
+        System.out.println("gn:(" + n.pos[0] + "," + n.pos[1] + ")");
+
+        Node z1 = minS(open1);
+        while (z1 != null) {
+            parent_list.add(z1);
+            z1 = z1.Sparent_node;
+        }
+        if (find(n.pos[0],n.pos[1],parent_list)) {
+            end_node = n;
+            System.out.println("sp("+end_node.Sparent_node.pos[0]+","+end_node.Sparent_node.pos[1]+") gp("+end_node.Gparent_node.pos[0]+","+end_node.Gparent_node.pos[1]+")");
+            help_search_path1(); /////たぶんここが違う
+            cycle_num++;
+		    equal_list_arrangement(equal_list);
+        if(equal_list.size() == 0){
+		    System.out.println("探索終了!");
+		    help_search_path2();
+            //System.exit(1);
+            return;
+		}else{
+		    new_start_node = equal_list.get(equal_list.size()-1);
+		    close_list_change(new_start_node);
+		    delete(equal_list,equal_list.get(equal_list.size()-1));
+		    new_open_list.add(new_start_node);  		       
+            search_path(new_open_list, new_open_list); 
+            return;
+		}
+        }
+        parent_list.clear();
+    
+        search(n,open2,0);
+	}
+    }/////↑ここまで
+
+    public void search (Node n, ArrayList<Node> list, int a) { /////new関数
         Node v;
         int dist, n_gs;
 	    boolean flag;
@@ -276,7 +325,7 @@ class NodeList{
             }else if (i==3) {
                 x = n.pos[0] + 0;
                 y = n.pos[1] + -1;
-            }/*else if (i==4){
+            }else if (i==4){
                 x = n.pos[0] + 1;
                 y = n.pos[1] + 1;
             }else if (i==5){
@@ -288,7 +337,7 @@ class NodeList{
             }else{
                 x = n.pos[0] + -1;
                 y = n.pos[1] + -1;
-            }*/
+            }
             
             if (y <= 0 || y >= StartGoal.map_height ||
                 x <= 0 || x >= StartGoal.map_width ||
@@ -361,14 +410,15 @@ class NodeList{
     
     //new!
     public void help_search_path1(){
-    Node path1 = end_node.Sparent_node;
-    Node path2 = end_node.Gparent_node;
+    Node path1 = end_node.Sparent_node; /////
+    Node path2 = end_node.Gparent_node; /////
     Astar_Map m;
+    System.out.println("help1");
 	
 	// ルートとなるノードに印をつける
 	while (true) {
         System.out.print("while");
-        if (path1.Sparent_node == null && path2.Gparent_node == null) break;
+        if (path1.Sparent_node == null && path2.Gparent_node == null) break; /////このへん
         if (path1.Sparent_node != null) {
             path_list.add(path1);
             path1 = path1.Sparent_node;
