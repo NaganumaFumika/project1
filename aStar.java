@@ -2,6 +2,8 @@
 /*アルゴリズム班のみ*/
 /*michihabaあり	*/
 /*System.exitなし */
+/*候補は多いが最終的に選ぶ経路は最短*/
+
 import java.io.*;
 import java.awt.*;
 import java.util.*;
@@ -15,19 +17,17 @@ public class aStar{
     public static void main (String[] args) {
 	Node node;
 	String[] map_data = {
-		"000000000000000000000",
-		"0S                  0",
-		"0     0             0",
-		"0     0             0",
-		"0     0             0",
-		"0     0             0",
-		"0     0             0",
-		"0     0             0",
-		"0     0             0",
-		"0     0             0",
-		"0     0             0",
-		"0     0   G         0",
-	    "000000000000000000000",
+	"00000000000000",
+	"0S           0",
+	"0     0      0",	
+	"0     0      0",
+	"0     0      0",
+	"0     0      0",
+	"0     0      0",
+	"0     0      0",	
+	"0     0      0",
+	"0     0G     0",
+	"00000000000000",
 	};
 	
 	map_width = 0;
@@ -51,7 +51,6 @@ public class aStar{
 	    }	
 	}	
 	new NodeList();
-	System.out.println("owatta!!");
 	}
 }
 
@@ -147,14 +146,14 @@ class NodeList{
     ArrayList <Integer> ngs_list = new ArrayList <Integer> (); //引数リス
     ArrayList <Node> path_list = new ArrayList <Node> ();
     Astar_Map a_map; 
-    int cycle_num = 1;
+	int cycle_num = 0;
+	int min_path;
 
 
     NodeList(){
 	start_node.fs = start_node.hs;
 	open_list.add(start_node);
 	search_path(open_list);
-	System.out.println("nodelist finish");
     }
 
     public Node findN(int xP,int yP,ArrayList<Node> list){
@@ -204,29 +203,8 @@ class NodeList{
 	while(true){
 	    if(open.size() == 0){
 			System.out.println("There is no route until reaching a goal.");
-	    	//System.exit(1);
-			//return;
-			//equal_list_arrangement(equal_list);
-			System.out.println("no ruteからの探索終了!");
 			help_search_path2();
-			System.out.println("help searchpath2ぬけた");
 			return;
-			/*
-			if(equal_list.size() == 0){
-			    System.out.println("no ruteからの探索終了!");
-			    help_search_path2();
-				//System.exit(1);
-				return;
-			}else{
-				System.out.println("no ruteからのseach_path呼び出し");
-		    	new_start_node = equal_list.get(equal_list.size()-1);
-			    close_list_change(new_start_node);
-			    delete(equal_list,equal_list.get(equal_list.size()-1));
-			    new_open_list.add(new_start_node);  		       
-				search_path(new_open_list);	
-				//System.exit(1);	 
-				return;   
-			}*/
 	    }
 
 	    n = min(open);
@@ -355,16 +333,23 @@ class NodeList{
 	    	System.out.println(s);
 		}
 
-		//マップ情報を格納・保持
-		m = new Astar_Map(path_list);
-		if(cycle_num == 1){
-		    a_map = m;
+		if(cycle_num == 0){
+			min_path = path_list.size();
+			m = new Astar_Map(path_list);
+			a_map = m;
 		}else{
-	    	m.p_map = a_map;
-	    	a_map = m;
+			if(min_path<path_list.size()){
+				//min_pathより大きい時は格納しない
+				return;
+			}else{
+				//マップ情報を格納・保持
+				m = new Astar_Map(path_list);
+				m.p_map = a_map;
+				a_map = m;
+			}
 		}
 		path_list.clear();  
-    }
+	}
     
 
 
@@ -457,6 +442,7 @@ class NodeList{
 	for(int i = 0;i<m2.p_list.size();i++){
 	    new_map[m2.p_list.get(i).pos[1]][m2.p_list.get(i).pos[0]] = '+';
 	}
+	System.out.println(cycle_num);
 	System.out.println("新しい道幅考慮したマップ:");
 	for (int i = 0; i < aStar.map_height; i++) {
 	    String s = String.valueOf(new_map[i]);
@@ -506,16 +492,16 @@ class NodeList{
 	    n = openM.get(i);
 	    if(n.fs == min && minN != n &&aStar.map[n.pos[1]][n.pos[0]] != 'S'){
 	       	for(int j = 0;j<equal_list.size();j++){
-       		if(n.pos[0]==equal_list.get(j).pos[0] &&
-		   n.pos[1]==equal_list.get(j).pos[1]){
-		    flag2 = false;
-		}
-		}
-		if(flag2==true){
-		    ngs = n.fs - n.hs;
-		    equal_list.add(n);
-		    ngs_list.add(ngs);
-		}
+	       		if(n.pos[0]==equal_list.get(j).pos[0] &&
+				   n.pos[1]==equal_list.get(j).pos[1]){
+		    		flag2 = false;
+				}
+			}
+			if(flag2==true){
+		    	ngs = n.fs - n.hs;
+			    equal_list.add(n);
+			    ngs_list.add(ngs);
+			}
 	    }
 	}
 	return minN;
