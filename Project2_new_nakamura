@@ -869,6 +869,7 @@ class NodeList{
 	while(true){
 	    if(open.size() == 0){
 		System.out.println("There is no route until reaching a goal.");
+		help_search_path2();
 		break;
 	    }
 
