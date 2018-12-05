@@ -201,7 +201,8 @@ class NodeList{
 	Node n1,n2;
     Node new_start_node1;
     Node new_start_node2;
-    ArrayList <Node> new_open_list = new ArrayList <Node> (); //引数リスト
+    ArrayList <Node> new_open_list1 = new ArrayList <Node> (); //引数リスト
+    ArrayList <Node> new_open_list2 = new ArrayList <Node> (); //引数リスト
     ArrayList <Node> parent_list = new ArrayList <Node> (); /////
     /*int dist,n_gs;
 	boolean flag;
