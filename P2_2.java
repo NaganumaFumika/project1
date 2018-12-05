@@ -1218,8 +1218,19 @@ class NodeList{
 	while(true){
 	    if(open.size() == 0){
 		System.out.println("There is no route until reaching a goal.");
-		help_search_path2();
-		break;
+		equal_list_arrangement(equal_list);
+		if(equal_list.size() == 0){
+		    System.out.println("探索終了!");
+		    help_search_path2();
+		    break;
+		}else{
+		    new_start_node = equal_list.get(equal_list.size()-1);
+		    close_list_change(new_start_node);
+		    delete(equal_list,equal_list.get(equal_list.size()-1));
+		    new_open_list.add(new_start_node);  		       
+		    search_path(new_open_list);
+		    break;		    
+		}
 	    }
 
 	    n = min(open);
@@ -1230,8 +1241,8 @@ class NodeList{
 	    if(Node.isGoal(n)){	    
 			end_node = n;
 	       	help_search_path1();
-			cycle_num++;
-			equal_list_arrangement(equal_list);
+		cycle_num++;
+		equal_list_arrangement(equal_list);
 		if(equal_list.size() == 0){
 		    System.out.println("探索終了!");
 		    help_search_path2();
