@@ -15,7 +15,7 @@ public class StartGoal{
     public static void main (String[] args) {
 	
 	String[] map_data = {
-        "000000000000000000000000000000000000",
+    "000000000000000000000000000000000000",
     "0         0000S0000        0    0  0",		
     "0         0000 0000  0000000  000000",
     "0         0000 0000  0000000  000000",
@@ -146,7 +146,7 @@ class NodeList{
     ArrayList <Node> close_list2 = new ArrayList <Node> (); /////
     Node start_node = new Node(StartGoal.start[0],StartGoal.start[1]);
     Node goal_node = new Node(StartGoal.goal[0],StartGoal.goal[1]); /////
-    Node end_node; 
+    Node Send_node, Gend_node; /////
     ArrayList <Node> end_list = new ArrayList <Node> (); 
     ArrayList <Integer> sum_michihaba  = new ArrayList <Integer> ();  
     ArrayList <Node> equal_list = new ArrayList <Node> ();
@@ -216,7 +216,7 @@ class NodeList{
 	    n = minS(open1); /////
 	    delete(open1,n);
         close_list1.add(n); 
-        System.out.println("sn:(" + n.pos[0] + "," + n.pos[1] + ") ");
+        //System.out.print("sn:(" + n.pos[0] + "," + n.pos[1] + ") ");
 
         /*	    
 	    if(Node.isGoal(n)){	    
@@ -240,14 +240,14 @@ class NodeList{
         }*/
         
         Node z2 = minG(open2);  /////↓ここから
-        //if (z2.Gparent_node != null) System.out.println("gparent:(" + z2.Gparent_node.pos[0] + "," + z2.Gparent_node.pos[1] + ")");
         while (z2 != null) {
             parent_list.add(z2);
             z2 = z2.Gparent_node;
         }
         if (find(n.pos[0],n.pos[1],parent_list)) {
-            end_node = n;
-            System.out.println("sp("+end_node.pos[0]+","+end_node.pos[1]+")");
+            Send_node = n; /////
+            Gend_node = findN(n.pos[0],n.pos[1],parent_list); /////
+            //System.out.println("sp("+Send_node.pos[0]+","+Send_node.pos[1]+")");
             help_search_path1(); /////たぶんここが違う
             cycle_num++;
 		    equal_list_arrangement(equal_list);
@@ -261,7 +261,7 @@ class NodeList{
 		    close_list_change(new_start_node);
 		    delete(equal_list,equal_list.get(equal_list.size()-1));
 		    new_open_list.add(new_start_node);  		       
-            search_path(new_open_list, new_open_list);		    /////ここ違う
+            search_path(new_open_list, new_open_list);		    /////このへん変更が必要
             return;
 		} 
         } 
@@ -272,7 +272,7 @@ class NodeList{
         n = minG(open2);
 	    delete(open2,n);
         close_list2.add(n); 
-        System.out.println("gn:(" + n.pos[0] + "," + n.pos[1] + ")");
+        //System.out.println("gn:(" + n.pos[0] + "," + n.pos[1] + ")");
 
         Node z1 = minS(open1);
         while (z1 != null) {
@@ -280,14 +280,15 @@ class NodeList{
             z1 = z1.Sparent_node;
         }
         if (find(n.pos[0],n.pos[1],parent_list)) {
-            end_node = n;
-            System.out.println("sp("+end_node.Sparent_node.pos[0]+","+end_node.Sparent_node.pos[1]+") gp("+end_node.Gparent_node.pos[0]+","+end_node.Gparent_node.pos[1]+")");
+            Gend_node = n; /////
+            Send_node = findN(n.pos[0],n.pos[1],parent_list); /////
+            //System.out.println("sp("+Gend_node.pos[0]+","+Gend_node.pos[1]+")");
             help_search_path1(); /////たぶんここが違う
             cycle_num++;
 		    equal_list_arrangement(equal_list);
         if(equal_list.size() == 0){
 		    System.out.println("探索終了!");
-		    help_search_path2();
+            help_search_path2();
             //System.exit(1);
             return;
 		}else{
@@ -295,7 +296,7 @@ class NodeList{
 		    close_list_change(new_start_node);
 		    delete(equal_list,equal_list.get(equal_list.size()-1));
 		    new_open_list.add(new_start_node);  		       
-            search_path(new_open_list, new_open_list); 
+            search_path(new_open_list, new_open_list); /////このへん変更が必要
             return;
 		}
         }
@@ -312,7 +313,7 @@ class NodeList{
 	    int x = 0;
         int y = 0;   
 
-        for(int i=0;i<8;i++){
+        for(int i=0;i<4;i++){
             if(i==0){
                 x = n.pos[0] + 1;
                 y = n.pos[1] + 0;
@@ -410,14 +411,12 @@ class NodeList{
     
     //new!
     public void help_search_path1(){
-    Node path1 = end_node.Sparent_node; /////
-    Node path2 = end_node.Gparent_node; /////
+    Node path1 = Send_node.Sparent_node; /////
+    Node path2 = Gend_node.Gparent_node; /////
     Astar_Map m;
-    System.out.println("help1");
 	
 	// ルートとなるノードに印をつける
 	while (true) {
-        System.out.print("while");
         if (path1.Sparent_node == null && path2.Gparent_node == null) break; /////このへん
         if (path1.Sparent_node != null) {
             path_list.add(path1);
@@ -442,7 +441,7 @@ class NodeList{
         new_map[path_list.get(i).pos[1]][path_list.get(i).pos[0]] = '+';    
     }
     
-    new_map[end_node.pos[1]][end_node.pos[0]] = 'C';
+    new_map[Send_node.pos[1]][Send_node.pos[0]] = 'C';
 
 	//System.out.println("新しい道幅考慮したマップ:");
 	for (int i = 0; i < StartGoal.map_height; i++) {
@@ -614,7 +613,7 @@ class NodeList{
             }
             }
             if(flag2==true){
-                ngs = n.Gfs - n.Shs;
+                ngs = n.Gfs - n.Ghs;
                 equal_list.add(n);
                 ngs_list.add(ngs);
             }
