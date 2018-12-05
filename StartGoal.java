@@ -149,7 +149,8 @@ class NodeList{
     Node Send_node, Gend_node; /////
     ArrayList <Node> end_list = new ArrayList <Node> (); 
     ArrayList <Integer> sum_michihaba  = new ArrayList <Integer> ();  
-    ArrayList <Node> equal_list = new ArrayList <Node> ();
+    ArrayList <Node> equal_list1 = new ArrayList <Node> ();
+    ArrayList <Node> equal_list2 = new ArrayList <Node> ();
     ArrayList <Integer> ngs_list = new ArrayList <Integer> (); 
     ArrayList <Node> path_list = new ArrayList <Node> ();
     Astar_Map a_map; 
@@ -197,8 +198,9 @@ class NodeList{
 
     //while True:以降の処理？
     public void search_path(ArrayList<Node> open1, ArrayList<Node> open2){ /////
-	Node n;
-	Node new_start_node;
+	Node n1,n2;
+    Node new_start_node1;
+    Node new_start_node2;
     ArrayList <Node> new_open_list = new ArrayList <Node> (); //引数リスト
     ArrayList <Node> parent_list = new ArrayList <Node> (); /////
     /*int dist,n_gs;
@@ -213,9 +215,9 @@ class NodeList{
         return;
 	    }
 
-	    n = minS(open1); /////
-	    delete(open1,n);
-        close_list1.add(n); 
+	    n1 = minS(open1); /////
+	    delete(open1,n1);
+        close_list1.add(n1); 
         //System.out.print("sn:(" + n.pos[0] + "," + n.pos[1] + ") ");
 
         /*	    
@@ -239,6 +241,7 @@ class NodeList{
 		}
         }*/
         
+        /*ここ消したyo!
         Node z2 = minG(open2);  /////↓ここから
         while (z2 != null) {
             parent_list.add(z2);
@@ -250,28 +253,28 @@ class NodeList{
             //System.out.println("sp("+Send_node.pos[0]+","+Send_node.pos[1]+")");
             help_search_path1(); /////たぶんここが違う
             cycle_num++;
-		    equal_list_arrangement(equal_list);
-        if(equal_list.size() == 0){
+		    equal_list_arrangement(equal_list1);
+        if(equal_list1.size() == 0){
 		    System.out.println("探索終了!");
 		    help_search_path2();
             //System.exit(1);
             return;
 		}else{
-		    new_start_node = equal_list.get(equal_list.size()-1);
-		    close_list_change(new_start_node);
-		    delete(equal_list,equal_list.get(equal_list.size()-1));
-		    new_open_list.add(new_start_node);  		       
+		    new_start_node1 = equal_list1.get(equal_list1.size()-1);
+		    close_list_change(new_start_node1);
+		    delete(equal_list1,equal_list1.get(equal_list1.size()-1));
+		    new_open_list.add(new_start_node1);  		       
             search_path(new_open_list, new_open_list);		    /////このへん変更が必要
             return;
 		} 
         } 
-        parent_list.clear();
+        parent_list.clear();*/
         
-        search(n,open1,1);
+        search(n1,open1,1);
 
-        n = minG(open2);
-	    delete(open2,n);
-        close_list2.add(n); 
+        n2 = minG(open2);
+	    delete(open2,n2);
+        close_list2.add(n2); 
         //System.out.println("gn:(" + n.pos[0] + "," + n.pos[1] + ")");
 
         Node z1 = minS(open1);
@@ -279,30 +282,39 @@ class NodeList{
             parent_list.add(z1);
             z1 = z1.Sparent_node;
         }
-        if (find(n.pos[0],n.pos[1],parent_list)) {
-            Gend_node = n; /////
-            Send_node = findN(n.pos[0],n.pos[1],parent_list); /////
+
+        if (find(n2.pos[0],n2.pos[1],parent_list)) {
+            Gend_node = n2; /////
+            Send_node = findN(n2.pos[0],n2.pos[1],parent_list); /////
             //System.out.println("sp("+Gend_node.pos[0]+","+Gend_node.pos[1]+")");
             help_search_path1(); /////たぶんここが違う
             cycle_num++;
-		    equal_list_arrangement(equal_list);
-        if(equal_list.size() == 0){
-		    System.out.println("探索終了!");
-            help_search_path2();
-            //System.exit(1);
-            return;
-		}else{
-		    new_start_node = equal_list.get(equal_list.size()-1);
-		    close_list_change(new_start_node);
-		    delete(equal_list,equal_list.get(equal_list.size()-1));
-		    new_open_list.add(new_start_node);  		       
-            search_path(new_open_list, new_open_list); /////このへん変更が必要
-            return;
-		}
+            equal_list_arrangement(equal_list1);
+		    equal_list_arrangement(equal_list2);
+            if(equal_list2.size() == 0 && equal_list1.size() == 0){
+	    	    System.out.println("探索終了!");
+                help_search_path2();
+                //System.exit(1);
+                return;
+		    }else if (equal_list2.size() == 0){
+    		    new_start_node2 = equal_list2.get(equal_list2.size()-1);
+	    	    close_list_change(new_start_node2);
+		        delete(equal_list2,equal_list2.get(equal_list2.size()-1));
+		        new_open_list2.add(new_start_node2);  		       
+                search_path(open1, new_open_list2); /////このへん変更したyo!
+                return;
+		    }else if (equal_list1.size() == 0){
+                new_start_node1 = equal_list1.get(equal_list1.size()-1);
+	    	    close_list_change(new_start_node1);
+		        delete(equal_list1,equal_list1.get(equal_list1.size()-1));
+		        new_open_list1.add(new_start_node1);  		       
+                search_path(new_open_list1, open2); /////このへん変更したyo!
+                return;
+            }
         }
         parent_list.clear();
     
-        search(n,open2,0);
+        search(n2,open2,0);
 	}
     }/////↑ここまで
 
@@ -470,18 +482,18 @@ class NodeList{
 	    n = equal.get(i);
 	    parent = n.Sparent_node;
 	    while(true){
-		if(parent == null) break;
-		for(int j = 0;j<equal.size();j++){
-		    if(parent == equal.get(j)){
-			delete_list.add(equal.get(j));
+    		if(parent == null) break;
+	    	for(int j = 0;j<equal.size();j++){
+		        if(parent == equal.get(j)){
+			        delete_list.add(equal.get(j));
+		        }
 		    }
-		}
-		parent = parent.Sparent_node;
+		    parent = parent.Sparent_node;
 	    }
 	}
 
 	for(int i =0;i<delete_list.size();i++){
-	    delete(equal_list,delete_list.get(i));
+	    delete(equal,delete_list.get(i));
 	}
     }
 
@@ -573,15 +585,15 @@ class NodeList{
 	for(int i = 0;i<openM.size();i++){
 	    n = openM.get(i);
 	    if(n.Sfs == min && minN != n && StartGoal.map[n.pos[1]][n.pos[0]] != 'S'){
-	       	for(int j = 0;j<equal_list.size();j++){
-       		if(n.pos[0]==equal_list.get(j).pos[0] &&
-		   n.pos[1]==equal_list.get(j).pos[1]){
+	       	for(int j = 0;j<equal_list1.size();j++){
+       		if(n.pos[0]==equal_list1.get(j).pos[0] &&
+		   n.pos[1]==equal_list1.get(j).pos[1]){
 		    flag2 = false;
 		}
 		}
 		if(flag2==true){
 		    ngs = n.Sfs - n.Shs;
-		    equal_list.add(n);
+		    equal_list1.add(n);
 		    ngs_list.add(ngs);
 		}
 	    }
@@ -606,15 +618,15 @@ class NodeList{
         for(int i = 0;i<openM.size();i++){
             n = openM.get(i);
             if(n.Gfs == min && minN != n && StartGoal.map[n.pos[1]][n.pos[0]] != 'S'){
-                   for(int j = 0;j<equal_list.size();j++){
-                   if(n.pos[0]==equal_list.get(j).pos[0] &&
-               n.pos[1]==equal_list.get(j).pos[1]){
+                   for(int j = 0;j<equal_list2.size();j++){
+                   if(n.pos[0]==equal_list2.get(j).pos[0] &&
+               n.pos[1]==equal_list2.get(j).pos[1]){
                 flag2 = false;
             }
             }
             if(flag2==true){
                 ngs = n.Gfs - n.Ghs;
-                equal_list.add(n);
+                equal_list2.add(n);
                 ngs_list.add(ngs);
             }
             }
