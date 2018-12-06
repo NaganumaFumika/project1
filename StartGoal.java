@@ -381,7 +381,7 @@ class NodeList{
 
 	// ルートとなるノードに印をつける
 	while (true) {
-        if(path1==null){
+        if(path1==null){/////このへん変更したyo!
             if (path2.Gparent_node == null) {
                 break;
             }
@@ -389,7 +389,7 @@ class NodeList{
                 path_list.add(path2);
                 path2 = path2.Gparent_node;
             }
-        }else if (path2==null){
+        }else if (path2==null){/////このへん変更したyo!
             if (path1.Sparent_node == null) {
                 break; 
             }
