@@ -1199,7 +1199,7 @@ class NodeList{
             
             if (y <= 0 || y >= aStar.map_height ||
                 x <= 0 || x >= aStar.map_width ||
-                (aStar.aStarmap[y][x] == '0')) {
+		aStar.aStarmap[y][x] == '0'||aStar.aStarmap[y][x] == 'X')
                 continue;
             }
 
