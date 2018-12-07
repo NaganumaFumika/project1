@@ -497,7 +497,7 @@ class Map extends JPanel{
 		    for(int y = -1*yabakyori; y < yabakyori; y++){
 			if (f_x.get(i) + x > -1&& f_x.get(i) + x < lx){
 			    if (f_y.get(i) + y > -1 &&  f_y.get(i) + y < ly){
-				if(map[f_x.get(i)+x][f_y.get(i)+y]==' '){
+				if(map[f_y.get(i)+y][f_x.get(i)+x]==' '){
 				    map[f_y.get(i)+y][f_x.get(i)+x]='P';
 				}
 			    }
@@ -511,7 +511,7 @@ class Map extends JPanel{
 		    for(int y = -1; y < 2; y++){
 			if (f_x.get(i) + x > -1&& f_x.get(i) + x < lx){
 			    if (f_y.get(i) + y > -1 &&  f_y.get(i) + y < ly){
-				if(map[f_x.get(i)+x][f_y.get(i)+y]=='0'){
+				if(map[f_y.get(i)+y][f_x.get(i)+x]=='0'){
 				    map[f_y.get(i)+y][f_x.get(i)+x]='F';
 				}
 			    }
