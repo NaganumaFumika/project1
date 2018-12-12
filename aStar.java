@@ -151,7 +151,7 @@ class NodeList{
     NodeList(){
 	start_node.fs = start_node.hs;
 	open_list.add(start_node);
-	search_path(open_list);
+	action(open_list);
     }
 
 	public void action(ArrayList<Node> open) {
