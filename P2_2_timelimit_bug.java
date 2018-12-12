@@ -29,8 +29,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 
-//262s–Ú‚Å5’š–Ú•t‹ß‚Ìo—Í
-//mapƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½‚çuser‚ğ’†S‚É100ƒsƒNƒZƒ‹‚Ì³•ûŒ`‚ğo—Í
+//262è¡Œç›®ã§5ä¸ç›®ä»˜è¿‘ã®å‡ºåŠ›
+//mapãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ãŸã‚‰userã‚’ä¸­å¿ƒã«100ãƒ”ã‚¯ã‚»ãƒ«ã®æ­£æ–¹å½¢ã‚’å‡ºåŠ›
 
 public class P2_2_timelimit_bug extends JPanel{
 
@@ -46,8 +46,8 @@ public class P2_2_timelimit_bug extends JPanel{
 
     Map.button tree = map.new button();
 	
-	//ƒoƒO—p
-	Map.button Map_output = map.new button(); //user‚Ìü‚è‚Ì50ƒsƒNƒZƒ‹‚Ì’n}‚ğo—Í
+	//ãƒã‚°ç”¨
+	Map.button Map_output = map.new button(); //userã®å‘¨ã‚Šã®50ãƒ”ã‚¯ã‚»ãƒ«ã®åœ°å›³ã‚’å‡ºåŠ›
 	 char[][] map1 = new char [101][101];
 	char[][] map2 = new char [101][101];
     int xl = map.lx;//maisuu  panel
@@ -86,17 +86,17 @@ public class P2_2_timelimit_bug extends JPanel{
 
 	fire.y = 30;
 
-	fire.name = "‰ÎĞ";
+	fire.name = "ç«ç½";
 
 	tree.x = 990;
 
 	tree.y = 30;
 
-	tree.name = "“|–Ø";
+	tree.name = "å€’æœ¨";
     
     	Map_output.x = 920;
    	 	Map_output.y = 230;
-    	Map_output.name = "’n}";
+    	Map_output.name = "åœ°å›³";
     
 
 	//char button_flag;
@@ -259,7 +259,7 @@ public class P2_2_timelimit_bug extends JPanel{
 
 				    }
 					
-					System.out.println("Astar ’¼Œã");
+					System.out.println("Astar ç›´å¾Œ");
 					for (int k = 380; k <  481; k++) {
 
 					    for(int j=470; j<571; j++) {
@@ -373,7 +373,7 @@ public class P2_2_timelimit_bug extends JPanel{
 
 				    i = 2; //changeF
 
-				    /*ƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“’â~‚à‚¤ˆê“xmap‚Ì‘—óM•K—v*/
+				    /*ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³åœæ­¢ã‚‚ã†ä¸€åº¦mapã®é€å—ä¿¡å¿…è¦*/
 
 				    //
 
@@ -450,7 +450,7 @@ public class P2_2_timelimit_bug extends JPanel{
 
 				i = 3;
 
-				System.out.println("‰ÎĞ is selected");
+				System.out.println("ç«ç½ is selected");
 
 				//change
 
@@ -466,7 +466,7 @@ public class P2_2_timelimit_bug extends JPanel{
 
 				click_map = true;
 
-				System.out.println("“|–Ø is selected");
+				System.out.println("å€’æœ¨ is selected");
 
 
 
@@ -474,11 +474,11 @@ public class P2_2_timelimit_bug extends JPanel{
 
 				repaint();
 
-			    } else if(Map_output.x<=e.getX() && e.getX()<=Map_output.x+60 && Map_output.y<=e.getY() && e.getY()<=Map_output.y+60){//ƒoƒO—p
+			    } else if(Map_output.x<=e.getX() && e.getX()<=Map_output.x+60 && Map_output.y<=e.getY() && e.getY()<=Map_output.y+60){//ãƒã‚°ç”¨
 			    	System.out.println("Map is selected");
-			    	int xm = human.get(0).x_now/xn;//ƒ}ƒX‚ğ‚¾‚·	    
+			    	int xm = human.get(0).x_now/xn;//ãƒã‚¹ã‚’ã ã™	    
 
-			    	int ym = human.get(0).y_now/yn;//ƒ}ƒX‚ğo‚·
+			    	int ym = human.get(0).y_now/yn;//ãƒã‚¹ã‚’å‡ºã™
 			    	
 			    	m.get(0).map[ym][xm] = 'U';
 			    	
@@ -552,10 +552,10 @@ public class P2_2_timelimit_bug extends JPanel{
 
 		  /*
 			
-			//ƒoƒO—p
-			int xm = human.get(0).x_now/xn;//ƒ}ƒX‚ğ‚¾‚·	    
+			//ãƒã‚°ç”¨
+			int xm = human.get(0).x_now/xn;//ãƒã‚¹ã‚’ã ã™	    
 
-			    	int ym = human.get(0).y_now/yn;//ƒ}ƒX‚ğo‚·
+			    	int ym = human.get(0).y_now/yn;//ãƒã‚¹ã‚’å‡ºã™
 			    	
 			    	m.get(0).map[ym][xm] = 'U';
 			
@@ -592,11 +592,11 @@ public class P2_2_timelimit_bug extends JPanel{
 
     public void speedy_move(int s){
 
-     for(int t = 0 ; t < human.size(); t++){//human‚Åƒ‹[ƒv
+     for(int t = 0 ; t < human.size(); t++){//humanã§ãƒ«ãƒ¼ãƒ—
 
-	    int xm = human.get(t).x_now/xn;//ƒ}ƒX‚ğ‚¾‚·	    
+	    int xm = human.get(t).x_now/xn;//ãƒã‚¹ã‚’ã ã™	    
 
-	    int ym = human.get(t).y_now/yn;//ƒ}ƒX‚ğo‚·
+	    int ym = human.get(t).y_now/yn;//ãƒã‚¹ã‚’å‡ºã™
 
 	    if((human.get(t).x_now-xn/2)%xn == 0 && (human.get(t).y_now-yn/2)%yn == 0){
 
@@ -604,15 +604,15 @@ public class P2_2_timelimit_bug extends JPanel{
 
 		m.get(t).map[ym][xm] = ' ';
 
-		int x_max=0;//ˆÚ“®‚·‚éêŠ
+		int x_max=0;//ç§»å‹•ã™ã‚‹å ´æ‰€
 
 		int y_max=0;
 
-		for(int x= -s; x <s+1  ; x++ ){//xŒü‚«‚É+’Tõ
+		for(int x= -s; x <s+1  ; x++ ){//xå‘ãã«+æ¢ç´¢
 
-		    if (xm + x > -1&& xm + x < xl){//˜gŠO‚É‚Å‚È‚¢‚æ‚¤‚É‚·‚éA‚Å‚»‚¤‚È‚ç”ÍˆÍ‚ğ’·•ûŒ`‚É‚·‚é
+		    if (xm + x > -1&& xm + x < xl){//æ å¤–ã«ã§ãªã„ã‚ˆã†ã«ã™ã‚‹ã€ã§ãã†ãªã‚‰ç¯„å›²ã‚’é•·æ–¹å½¢ã«ã™ã‚‹
 
-			if(ym-s >-1){//sƒ}ƒCƒiƒX‘¤ƒ`ƒFƒbƒN
+			if(ym-s >-1){//sãƒã‚¤ãƒŠã‚¹å´ãƒã‚§ãƒƒã‚¯
 
 			    if(m.get(t).map[ym-s][xm+x] == '+'||m.get(t).map[ym-s][xm+x] == 'G' ){
 
@@ -644,7 +644,7 @@ public class P2_2_timelimit_bug extends JPanel{
 
 			
 
-			if(ym+s < yl){//sƒvƒ‰ƒX‘¤ƒ`ƒFƒbƒN
+			if(ym+s < yl){//sãƒ—ãƒ©ã‚¹å´ãƒã‚§ãƒƒã‚¯
 
 			    if(m.get(t).map[ym+s][xm+x] == '+'||m.get(t).map[ym+s][xm+x] == 'G' ){
 
@@ -680,11 +680,11 @@ public class P2_2_timelimit_bug extends JPanel{
 
 		
 
-		for(int y= -s; y <s+1  ; y++ ){//yŒü‚«‚É+’Tõ
+		for(int y= -s; y <s+1  ; y++ ){//yå‘ãã«+æ¢ç´¢
 
 		    
 
-		    if (ym + y > -1&& ym + y < yl){//˜gŠO‚É‚Å‚È‚¢‚æ‚¤‚É‚·‚éA‚Å‚»‚¤‚È‚ç”ÍˆÍ‚ğ’·•ûŒ`‚É‚·‚é
+		    if (ym + y > -1&& ym + y < yl){//æ å¤–ã«ã§ãªã„ã‚ˆã†ã«ã™ã‚‹ã€ã§ãã†ãªã‚‰ç¯„å›²ã‚’é•·æ–¹å½¢ã«ã™ã‚‹
 
 			if(xm-s >-1){
 
@@ -752,7 +752,7 @@ public class P2_2_timelimit_bug extends JPanel{
 
 
 
-		//˜g“à‚Ì+‚ğÁ‚·
+		//æ å†…ã®+ã‚’æ¶ˆã™
 
 		if(x_max > -1){
 
@@ -820,15 +820,15 @@ public class P2_2_timelimit_bug extends JPanel{
 
 		}
 
-		if(x_max == 0&&y_max==0){//’Tõ˜g“à‚ÉƒS[ƒ‹‚ ‚é
+		if(x_max == 0&&y_max==0){//æ¢ç´¢æ å†…ã«ã‚´ãƒ¼ãƒ«ã‚ã‚‹
 
-		    for(int x= -s; x <s+1  ; x++ ){//xŒü‚«‚É+’Tõ
+		    for(int x= -s; x <s+1  ; x++ ){//xå‘ãã«+æ¢ç´¢
 
-			if (xm + x > -1&& xm + x < xl){//˜gŠO‚É‚Å‚È‚¢‚æ‚¤‚É‚·‚éA‚Å‚»‚¤‚È‚ç”ÍˆÍ‚ğ’·•ûŒ`‚É‚·‚é
+			if (xm + x > -1&& xm + x < xl){//æ å¤–ã«ã§ãªã„ã‚ˆã†ã«ã™ã‚‹ã€ã§ãã†ãªã‚‰ç¯„å›²ã‚’é•·æ–¹å½¢ã«ã™ã‚‹
 
-			    for(int y= -s; y <s+1  ; y++ ){//yŒü‚«‚É+’Tõ
+			    for(int y= -s; y <s+1  ; y++ ){//yå‘ãã«+æ¢ç´¢
 
-				if (ym + y > -1&& ym + y < yl){//˜gŠO‚É‚Å‚È‚¢‚æ‚¤‚É‚·‚éA‚Å‚»‚¤‚È‚ç”ÍˆÍ‚ğ’·•ûŒ`‚É‚·‚é
+				if (ym + y > -1&& ym + y < yl){//æ å¤–ã«ã§ãªã„ã‚ˆã†ã«ã™ã‚‹ã€ã§ãã†ãªã‚‰ç¯„å›²ã‚’é•·æ–¹å½¢ã«ã™ã‚‹
 
 				    if(m.get(t).map[ym+y][xm+x] == 'G' ){
 
@@ -850,7 +850,7 @@ public class P2_2_timelimit_bug extends JPanel{
 
 		
 
-		//‚±‚ê‚ÅˆÚ“®êŠ‚ÍŒˆ’èA‚±‚ê‚©‚çˆÚ“®‚·‚éB
+		//ã“ã‚Œã§ç§»å‹•å ´æ‰€ã¯æ±ºå®šã€ã“ã‚Œã‹ã‚‰ç§»å‹•ã™ã‚‹ã€‚
 
 		human.get(t).vx = x_max; human.get(t).vy = y_max; //i = 1;
 
@@ -1019,7 +1019,7 @@ class Map extends JPanel{
 
 
 
-    //’Ç‰Á•”•ª 
+    //è¿½åŠ éƒ¨åˆ† 
 
     public static int pix_x = 900/lx;
 
@@ -1643,7 +1643,7 @@ class aStar{
 
 
 
-// NodeƒNƒ‰ƒX
+// Nodeã‚¯ãƒ©ã‚¹
 
 class Node{
 
@@ -1665,7 +1665,7 @@ class Node{
 
  
 
-    // ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+    // ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 
     public Node (int x, int y) {
 
@@ -1771,7 +1771,7 @@ class Node{
 
     
 
-    // Œ»İ’n‚ğƒS[ƒ‹‚Æ‚·‚éƒƒ\ƒbƒh
+    // ç¾åœ¨åœ°ã‚’ã‚´ãƒ¼ãƒ«ã¨ã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
 
     public static boolean isGoal (Node n) {
 
@@ -1793,7 +1793,7 @@ class Node{
 
 
 
-//“¹•l—¶‚ÌÛAÅ’ZŒo˜H‚ğŠi”[‚µ‚½ArrayList‚ğ•Û‚·‚é‚½‚ß‚ÌƒNƒ‰ƒX
+//é“å¹…è€ƒæ…®ã®éš›ã€æœ€çŸ­çµŒè·¯ã‚’æ ¼ç´ã—ãŸArrayListã‚’ä¿æŒã™ã‚‹ãŸã‚ã®ã‚¯ãƒ©ã‚¹
 
 class Astar_Map{
 
@@ -1857,7 +1857,7 @@ class NodeList{
 
 	int min_path;
 
-	long startTime;//ƒ^ƒCƒ€ƒAƒbƒv
+	long startTime;//ã‚¿ã‚¤ãƒ ã‚¢ãƒƒãƒ—
 
 
 
@@ -1865,7 +1865,7 @@ class NodeList{
 
     NodeList(){
 
-		startTime = System.currentTimeMillis();//ƒ^ƒCƒ€ƒAƒbƒv
+		startTime = System.currentTimeMillis();//ã‚¿ã‚¤ãƒ ã‚¢ãƒƒãƒ—
 
 	start_node.Sfs = start_node.Shs; /////
 
@@ -1875,12 +1875,38 @@ class NodeList{
 
 	open_list2.add(goal_node); /////
 
-	search_path(open_list1, open_list2); /////
+	action(open_list1, open_list2); /////
 
     }
 
-    
+    public void action(ArrayList<Node> open1, ArrayList<Node> open2) { //new!å†å¸°é˜²æ­¢é–¢æ•°
+		Node new_start_node1;
+		Node new_start_node2;
+		ArrayList <Node> new_open_list1 = new ArrayList <Node> (); 
+		ArrayList <Node> new_open_list2 = new ArrayList <Node> (); 
+	
+		search_path(open_list1, open_list2); 
 
+		while(true){
+			if (equal_list1.size() != 0) {
+				new_start_node1 = equal_list1.get(equal_list1.size()-1);
+				close_list_change(new_start_node1,2);
+				delete(equal_list1,equal_list1.get(equal_list1.size()-1));
+				new_open_list1.add(new_start_node1);        
+				search_path(new_open_list1, open2);
+			}else if (equal_list2.size() != 0) {
+				new_start_node2 = equal_list2.get(equal_list2.size()-1);
+				close_list_change(new_start_node2,1);
+				delete(equal_list2,equal_list2.get(equal_list2.size()-1));
+				new_open_list2.add(new_start_node2);
+				search_path(open1, new_open_list2);
+			}else{
+				return;
+			}
+		}
+	}
+
+	
     public Node findN(int xP,int yP,ArrayList<Node> list){
 
 	    Node node;
@@ -1943,7 +1969,7 @@ class NodeList{
 
     
 
-   //python‚É‚ ‚Á‚Äjava‚É‚È‚¢ŠÖ”‚ÌÀ‘•
+   //pythonã«ã‚ã£ã¦javaã«ãªã„é–¢æ•°ã®å®Ÿè£…
 
     public Node minS(ArrayList<Node> openM){
 
@@ -2077,9 +2103,9 @@ class NodeList{
 
 
 
-    //equal_list“à‚É“¯‚¶Œo˜H‚É‚È‚è‚¤‚éŒó•â‚ğ‚±‚±‚ÅÁ‚µ‚Ä‚é
+    //equal_listå†…ã«åŒã˜çµŒè·¯ã«ãªã‚Šã†ã‚‹å€™è£œã‚’ã“ã“ã§æ¶ˆã—ã¦ã‚‹
 
-    public void equal_list_arrangement(ArrayList<Node> equal,int id){/////‚±‚Ì‚Ö‚ñ•ÏX‚µ‚½yo!
+    public void equal_list_arrangement(ArrayList<Node> equal,int id){/////ã“ã®ã¸ã‚“å¤‰æ›´ã—ãŸyo!
 
 	Node n;
 
@@ -2163,9 +2189,9 @@ class NodeList{
 
     
 
-    //2‚Â–ÚˆÈ~‚ÌŒo˜H’Tõ‚ğ‚·‚é‘O‚Éclose_list‚Ì’†g‚ğ®—‚·‚éŠÖ”  
+    //2ã¤ç›®ä»¥é™ã®çµŒè·¯æ¢ç´¢ã‚’ã™ã‚‹å‰ã«close_listã®ä¸­èº«ã‚’æ•´ç†ã™ã‚‹é–¢æ•°  
 
-    public void close_list_change(Node m,int id){/////‚±‚Ì‚Ö‚ñ•ÏX‚µ‚½yo!
+    public void close_list_change(Node m,int id){/////ã“ã®ã¸ã‚“å¤‰æ›´ã—ãŸyo!
 
 	Node n = m;
 
@@ -2213,255 +2239,89 @@ class NodeList{
 
 
 
-    //Œo˜H’Tõ
-
-    public void search_path(ArrayList<Node> open1, ArrayList<Node> open2){ /////
-
+ //çµŒè·¯æ¢ç´¢
+    public void search_path(ArrayList<Node> open1, ArrayList<Node> open2){ 
 	Node n1,n2;
+	ArrayList <Node> parent_list = new ArrayList <Node> (); 
 
-	Node new_start_node1;
-
-	Node new_start_node2;
-
-	ArrayList <Node> new_open_list1 = new ArrayList <Node> (); //ˆø”ƒŠƒXƒg
-
-	ArrayList <Node> new_open_list2 = new ArrayList <Node> (); //ˆø”ƒŠƒXƒg
-
-	ArrayList <Node> parent_list = new ArrayList <Node> (); /////
-
-	/*int dist,n_gs;
-
-	  boolean flag;
-
-	  int x = 0;
-
-	  int y = 0;*/
-
-	long currentTime;//ƒ^ƒCƒ€ƒAƒbƒv
-
-	long processingTime;//ƒ^ƒCƒ€ƒAƒbƒv
-
+	long currentTime;//ã‚¿ã‚¤ãƒ ã‚¢ãƒƒãƒ—
+	long processingTime;//ã‚¿ã‚¤ãƒ ã‚¢ãƒƒãƒ—
 	
-
 	while(true){
-
-		currentTime = System.currentTimeMillis();//ƒ^ƒCƒ€ƒAƒbƒv«
-
-        processingTime = currentTime-startTime;
-
-        if(processingTime>12000){//§ŒÀŠÔ
-
-            System.out.println("Time is up.");
-
-            help_search_path2();
-
-            return;
-
-        }//ƒ^ƒCƒ€ƒAƒbƒvª
-
-	    if(open1.size() == 0 || open2.size() == 0){ /////
-
+	    currentTime = System.currentTimeMillis();//ã‚¿ã‚¤ãƒ ã‚¢ãƒƒãƒ—â†“
+	    processingTime = currentTime-startTime;
+	    if(processingTime>12000){//åˆ¶é™æ™‚é–“
+		System.out.println("Time is up.");
+		help_search_path2();
+		return;
+	    }//ã‚¿ã‚¤ãƒ ã‚¢ãƒƒãƒ—â†‘
+	    if(open1.size() == 0 || open2.size() == 0){ 
 		System.out.println("There is no route until reaching a goal.");
-
-		equal_list_arrangement(equal_list1,1);/////‚±‚Ì‚Ö‚ñ•ÏX‚µ‚½yo!
-
-		equal_list_arrangement(equal_list2,2);/////‚±‚Ì‚Ö‚ñ•ÏX‚µ‚½yo!
-
+		equal_list_arrangement(equal_list1,1);
+		equal_list_arrangement(equal_list2,2);
 		if(equal_list2.size() == 0 && equal_list1.size() == 0){
-
-		    System.out.println("’TõI—¹!");
-
+		    System.out.println("æ¢ç´¢çµ‚äº†!");
 		    help_search_path2();
-
-		    //System.exit(1);
-
 		    return;
-
-		}else if (equal_list1.size() == 0){
-
-		    new_start_node2 = equal_list2.get(equal_list2.size()-1);
-
-	    	    close_list_change(new_start_node2,1);/////‚±‚Ì‚Ö‚ñ•ÏX‚µ‚½yo!
-
-		    delete(equal_list2,equal_list2.get(equal_list2.size()-1));
-
-		    new_open_list2.add(new_start_node2);
-
-		    search_path(open1, new_open_list2); /////‚±‚Ì‚Ö‚ñ•ÏX‚µ‚½yo!
-
-		    return;
-
 		}else{
-
-		    new_start_node1 = equal_list1.get(equal_list1.size()-1);
-
-	    	    close_list_change(new_start_node1,2);/////‚±‚Ì‚Ö‚ñ•ÏX‚µ‚½yo!
-
-		    delete(equal_list1,equal_list1.get(equal_list1.size()-1));
-
-		    new_open_list1.add(new_start_node1);        
-
-		    search_path(new_open_list1, open2); /////‚±‚Ì‚Ö‚ñ•ÏX‚µ‚½yo!
-
-		    return;
-
+			return;
 		}
-
 	    }
-
 	    
-
-	    n1 = minS(open1); /////
-
+	    n1 = minS(open1); 
 	    delete(open1,n1);
-
 	    close_list1.add(n1); 
-
 	    
-
 	    search(n1,open1,1);
-
-	    if(open1.size() == 0 || open2.size() == 0){   /////‚±‚Ì‚Ö‚ñ•ÏX‚µ‚½yo!
-
+	    
+	    if(open1.size() == 0 || open2.size() == 0){   
 		System.out.println("There is no route until reaching a goal.");
-
-		equal_list_arrangement(equal_list1,1);/////‚±‚Ì‚Ö‚ñ•ÏX‚µ‚½yo!
-
-		equal_list_arrangement(equal_list2,2);/////‚±‚Ì‚Ö‚ñ•ÏX‚µ‚½yo!
-
+		equal_list_arrangement(equal_list1,1);
+		equal_list_arrangement(equal_list2,2);
 		if(equal_list2.size() == 0 && equal_list1.size() == 0){
-
-		    System.out.println("’TõI—¹!");
-
+		    System.out.println("æ¢ç´¢çµ‚äº†!");
 		    help_search_path2();
-
-		    //System.exit(1);
-
 		    return;
-
-		}else if (equal_list1.size() == 0){
-
-		    new_start_node2 = equal_list2.get(equal_list2.size()-1);
-
-	    	    close_list_change(new_start_node2,1);/////‚±‚Ì‚Ö‚ñ•ÏX‚µ‚½yo!
-
-		    delete(equal_list2,equal_list2.get(equal_list2.size()-1));
-
-		    new_open_list2.add(new_start_node2);
-
-		    search_path(open1, new_open_list2); /////‚±‚Ì‚Ö‚ñ•ÏX‚µ‚½yo!
-
-		    return;
-
 		}else{
-
-		    new_start_node1 = equal_list1.get(equal_list1.size()-1);
-
-	    	    close_list_change(new_start_node1,2);/////‚±‚Ì‚Ö‚ñ•ÏX‚µ‚½yo!
-
-		    delete(equal_list1,equal_list1.get(equal_list1.size()-1));
-
-		    new_open_list1.add(new_start_node1);        
-
-		    search_path(new_open_list1, open2); /////‚±‚Ì‚Ö‚ñ•ÏX‚µ‚½yo!
-
 		    return;
-
 		}
-
 	    }
-
 	    
-
 	    n2 = minG(open2);
-
 	    delete(open2,n2);
-
 	    close_list2.add(n2); 
-
 	    
-
 	    Node z1 = minS(open1);
-
 	    while (z1 != null) {
-
 		parent_list.add(z1);
-
 		z1 = z1.Sparent_node;
-
 	    }
-
 	    
-
 	    if (find(n2.pos[0],n2.pos[1],parent_list)) {
-
-		Gend_node = n2; /////
-
-		Send_node = findN(n2.pos[0],n2.pos[1],parent_list); /////
-
+		Gend_node = n2; 
+		Send_node = findN(n2.pos[0],n2.pos[1],parent_list);
 		help_search_path1(); 
-
 		cycle_num++;
-
-		equal_list_arrangement(equal_list1,1);/////‚±‚Ì‚Ö‚ñ•ÏX‚µ‚½yo!
-
-		equal_list_arrangement(equal_list2,2);/////‚±‚Ì‚Ö‚ñ•ÏX‚µ‚½yo!
-
+		equal_list_arrangement(equal_list1,1);
+		equal_list_arrangement(equal_list2,2);
 		if(equal_list2.size() == 0 && equal_list1.size() == 0){
-
-		    System.out.println("’TõI—¹!");
-
+		    System.out.println("æ¢ç´¢çµ‚äº†!");
 		    help_search_path2();
-
-		    //System.exit(1);
-
 		    return;
-
-		}else if (equal_list1.size() == 0){
-
-		    new_start_node2 = equal_list2.get(equal_list2.size()-1);
-
-	    	    close_list_change(new_start_node2,1);/////‚±‚Ì‚Ö‚ñ•ÏX‚µ‚½yo!
-
-		    delete(equal_list2,equal_list2.get(equal_list2.size()-1));
-
-		    new_open_list2.add(new_start_node2);
-
-		    search_path(open1, new_open_list2); /////‚±‚Ì‚Ö‚ñ•ÏX‚µ‚½yo!
-
-		    return;
-
 		}else{
-
-		    new_start_node1 = equal_list1.get(equal_list1.size()-1);
-
-	    	    close_list_change(new_start_node1,2);/////‚±‚Ì‚Ö‚ñ•ÏX‚µ‚½yo!
-
-		    delete(equal_list1,equal_list1.get(equal_list1.size()-1));
-
-		    new_open_list1.add(new_start_node1);        
-
-		    search_path(new_open_list1, open2); /////‚±‚Ì‚Ö‚ñ•ÏX‚µ‚½yo!
-
 		    return;
-
 		}
-
 	    }
-
 	    parent_list.clear();
-
 	    
-
 	    search(n2,open2,0);
-
 	}
 
-    }/////ª‚±‚±‚Ü‚Å
+    }
 
     
 
-    public void search (Node n, ArrayList<Node> list, int a) { /////newŠÖ”
+    public void search (Node n, ArrayList<Node> list, int a) { /////newé–¢æ•°
 
         Node v;
 
@@ -2665,7 +2525,7 @@ class NodeList{
 
     
 
-     //Å’ZŒo˜H‚ÌŒó•â‚ÌŒo˜H‚ğ•Û‘¶‚·‚éŠÖ”
+     //æœ€çŸ­çµŒè·¯ã®å€™è£œã®çµŒè·¯ã‚’ä¿å­˜ã™ã‚‹é–¢æ•°
 
     public void help_search_path1(){
 
@@ -2677,11 +2537,11 @@ class NodeList{
 
 
 
-    // ƒ‹[ƒg‚Æ‚È‚éƒm[ƒh‚Éˆó‚ğ‚Â‚¯‚é
+    // ãƒ«ãƒ¼ãƒˆã¨ãªã‚‹ãƒãƒ¼ãƒ‰ã«å°ã‚’ã¤ã‘ã‚‹
 
     while (true) {
 
-        if(path1==null){/////‚±‚Ì‚Ö‚ñ•ÏX‚µ‚½yo!
+        if(path1==null){/////ã“ã®ã¸ã‚“å¤‰æ›´ã—ãŸyo!
 
             if (path2.Gparent_node == null) {
 
@@ -2697,7 +2557,7 @@ class NodeList{
 
             }
 
-        }else if (path2==null){/////‚±‚Ì‚Ö‚ñ•ÏX‚µ‚½yo!
+        }else if (path2==null){/////ã“ã®ã¸ã‚“å¤‰æ›´ã—ãŸyo!
 
             if (path1.Sparent_node == null) {
 
@@ -2743,7 +2603,7 @@ class NodeList{
 
     
 
-    //ƒ}ƒbƒvî•ñ‚ğŠi”[E•Û
+    //ãƒãƒƒãƒ—æƒ…å ±ã‚’æ ¼ç´ãƒ»ä¿æŒ
 
     if(cycle_num == 1){
 
@@ -2757,9 +2617,9 @@ class NodeList{
 
 	if(min_path>=path_list.size()){
 
-	    //min_path‚æ‚è‘å‚«‚¢‚ÍŠi”[‚µ‚È‚¢
+	    //min_pathã‚ˆã‚Šå¤§ãã„æ™‚ã¯æ ¼ç´ã—ãªã„
 
-	    //ƒ}ƒbƒvî•ñ‚ğŠi”[E•Û
+	    //ãƒãƒƒãƒ—æƒ…å ±ã‚’æ ¼ç´ãƒ»ä¿æŒ
 
 	    m = new Astar_Map(path_list);
 
@@ -2781,7 +2641,7 @@ class NodeList{
 
     
 
-    //“¹•‚ªÅ‚à‘å‚«‚¢“¹‚ğ’Ê‚éŒo˜H‚ğŒó•â‚©‚ç‘I‚Ño‚µA‚»‚ÌŒo˜H‚ğ•\¦‚·‚éŠÖ”  
+    //é“å¹…ãŒæœ€ã‚‚å¤§ãã„é“ã‚’é€šã‚‹çµŒè·¯ã‚’å€™è£œã‹ã‚‰é¸ã³å‡ºã—ã€ãã®çµŒè·¯ã‚’è¡¨ç¤ºã™ã‚‹é–¢æ•°  
 
     public void help_search_path2(){
 
@@ -2887,7 +2747,7 @@ class NodeList{
 
 
 
-	/*ƒtƒ@ƒCƒ‹‚Ö‚Ì‘‚«o‚µ
+	/*ãƒ•ã‚¡ã‚¤ãƒ«ã¸ã®æ›¸ãå‡ºã—
 
 	try{
 
@@ -2917,7 +2777,7 @@ class NodeList{
 
 		}else{
 
-		  System.out.println("ƒtƒ@ƒCƒ‹‚É‘‚«‚ß‚Ü‚¹‚ñ");
+		  System.out.println("ãƒ•ã‚¡ã‚¤ãƒ«ã«æ›¸ãè¾¼ã‚ã¾ã›ã‚“");
 
 		}
 
@@ -2931,7 +2791,7 @@ class NodeList{
 
 	/*
 
-	System.out.println("V‚µ‚¢“¹•l—¶‚µ‚½ƒ}ƒbƒv:");
+	System.out.println("æ–°ã—ã„é“å¹…è€ƒæ…®ã—ãŸãƒãƒƒãƒ—:");
 
 	for (int i = 0; i < aStar.map_height; i++) {
 
@@ -2945,7 +2805,7 @@ class NodeList{
 
 	
 
-	/*ƒtƒ@ƒCƒ‹‚Ö‚Ì‘‚«o‚µ‚Q
+	/*ãƒ•ã‚¡ã‚¤ãƒ«ã¸ã®æ›¸ãå‡ºã—ï¼’
 
 	private static boolean checkBeforeWritefile(File file){
 
