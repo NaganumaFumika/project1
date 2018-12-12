@@ -1,8 +1,6 @@
 /*入出力なし*/
 /*アルゴリズム班のみ*/
-/*michihabaあり	*/
-/*System.exitなし */
-/*候補は多いが最終的に選ぶ経路は最短*/
+/*stackoverflow問題を解決した最新版(12/12)*/
 
 import java.io.*;
 import java.awt.*;
@@ -156,6 +154,25 @@ class NodeList{
 	search_path(open_list);
     }
 
+	public void action(ArrayList<Node> open) {
+		Node new_start_node;
+		ArrayList <Node> new_open_list = new ArrayList <Node> (); //引数リスト
+		
+		search_path(open_list);
+
+		while(true) {
+			if (equal_list.size() != 0) {
+			new_start_node = equal_list.get(equal_list.size()-1);
+			close_list_change(new_start_node);
+			delete(equal_list,equal_list.get(equal_list.size()-1));
+			new_open_list.add(new_start_node);  		       
+			search_path(new_open_list);
+			}else{
+				return;
+			}
+		}
+	}
+	
     public Node findN(int xP,int yP,ArrayList<Node> list){
 	Node node;
 	for(int i = 0;i<list.size();i++){
@@ -187,24 +204,21 @@ class NodeList{
 	}
     }	
 
-    //while True:以降の処理？
-    public void search_path(ArrayList<Node> open){//hikisuu
+    //経路探索
+    public void search_path(ArrayList<Node> open){
 	Node n;
-	Node v;//(2,1)
-	Node new_start_node;
-	ArrayList <Node> new_open_list = new ArrayList <Node> (); //引数リスト
-	int dist,n_gs;
-	boolean flag;
-	int x = 0 ;
-	int y = 0;
-	//boolean naname = false;
-	int sum_width = 0;
 
 	while(true){
 	    if(open.size() == 0){
 			System.out.println("There is no route until reaching a goal.");
-			help_search_path2();
-			return;
+			equal_list_arrangement(equal_list); 
+			if(equal_list.size() == 0){
+            	System.out.println("探索終了!");
+		    	help_search_path2();
+		    	return;
+			}else{
+		    	return;		    
+			}
 	    }
 
 	    n = min(open);
@@ -212,81 +226,80 @@ class NodeList{
 	    close_list.add(n); 
 
 	    //new!	    
-	    if(Node.isGoal(n)){	    
+	    if(Node.isGoal(n)){ 
 			end_node = n;
-	       	help_search_path1();
-			cycle_num++;
-			equal_list_arrangement(equal_list);
-			if(equal_list.size() == 0){
-			    System.out.println("探索終了!");
-			    help_search_path2();
-				//System.exit(1);
-				return;
-			}else{
-		    	new_start_node = equal_list.get(equal_list.size()-1);
-			    close_list_change(new_start_node);
-			    delete(equal_list,equal_list.get(equal_list.size()-1));
-			    new_open_list.add(new_start_node);  		       
-				search_path(new_open_list);	
-				//System.exit(1);	 
-				return;   
-			}
+            help_search_path1(); 
+		    cycle_num++;
+		    equal_list_arrangement(equal_list); 
+		if(equal_list.size() == 0){
+            System.out.println("探索終了!");
+		    help_search_path2(); 
+		    return;
+		}else{
+		    return;
+		}
 	    }
 	    
-	    n_gs = n.fs - n.hs; 
+	    search(n, open);
+	}
+	
+	}
+	
+	public void search(Node n, ArrayList<Node> open) {
+		Node v;
+        int dist, n_gs;
+		boolean flag;
+		int x = 0;
+		int y = 0; 
+		
+		n_gs = n.fs - n.hs; 
 	    
-	    /*ノードnの移動可能方向のノードを調べる
-	      for v in ((1,0),(-1,0),(0,1),(0,-1)):*/
 	    for(int i=0;i<4;i++){
 		if(i==0){
 		    x = n.pos[0] + 1;
 		    y = n.pos[1] + 0;
-		    // naname = false;
 		}else if(i==1){
 		    x = n.pos[0] + -1;
 		    y = n.pos[1] + 0;
-		    // naname = false;
 		}else if (i==2){
 		    x = n.pos[0] + 0;
 		    y = n.pos[1] + 1;
-		    // naname = false;
-		}else{
+		}else if(i==3){
 		    x = n.pos[0] + 0;
 		    y = n.pos[1] + -1;
-		   // naname = false;
-		}
+		}else if (i==4){
+		    x = n.pos[0] + 1;
+		    y = n.pos[1] + 1;
+		}else if (i==5){
+		    x = n.pos[0] + -1;
+		    y = n.pos[1] + 1;
+		}else if (i==6){
+		    x = n.pos[0] + 1;
+		    y = n.pos[1] + -1;
+		}else{
+		    x = n.pos[0] + -1;
+		    y = n.pos[1] + -1;
+		} 
 		
-		/*マップが範囲外または壁(0)の場合はcontinue*/
 		if (y <= 0 || y >= aStar.map_height ||
 		    x <= 0 || x >= aStar.map_width ||
-		    (aStar.map[y][x] == '0')) {
+		    (aStar.aStarmap[y][x] == '0'||aStar.aStarmap[y][x] == 'X')) {
 		    continue;
 		}
 		
-		/*移動先のノードがOpen,Closeのどちらのリストに
-		  格納されているか、または新規ノードなのかを調べる*/
 		flag = find(x,y,open);
 		v = findN(x,y,open);
-		dist = (int)(Math.pow((n.pos[0]-x),2) + Math.pow((n.pos[1]-y),2));
-		/*	if(naname){
-			dist = dist+6;
-			}*/
-		
+		dist = (int)(Math.pow((n.pos[0]-x),2) + Math.pow((n.pos[1]-y),2));		
 		
 		if(flag){
-		    /*移動先のノードがOpenリストに格納されていた場合、
-		      より小さいf*ならばノードmのf*を更新し、親を書き換え*/
 		    if (v.fs > n_gs + v.hs + dist){
-				v.fs = n_gs + v.hs + dist;
-				v.parent_node = n;
+			v.fs = n_gs + v.hs + dist;
+			v.parent_node = n;
 		    }
 		}else{
 		    flag = find(x,y,close_list);
 		    v = findN(x,y,close_list);
 		    if(flag){
-			/*移動先のノードがCloseリストに格納されていた場合、
-			  より小さいf*ならばノードmのf*を更新し、親を書き換え
-			  かつ、Openリストに移動する*/
 			if(v.fs > n_gs + v.hs + dist){
 			    v.fs = n_gs + v.hs + dist;
 			    v.parent_node = n;
@@ -294,16 +307,14 @@ class NodeList{
 			    delete(close_list,v);
 			}
 		    }else{
-			/*新規ノードならばOpenリストにノードに追加*/
 			v = new Node(x,y);
 			v.fs = n_gs + v.hs + dist;
 			v.parent_node = n;
 			open.add(v);
 		    }
 		}
-		}
+	    }
 	}
-    }
     
  
     public void help_search_path1(){
