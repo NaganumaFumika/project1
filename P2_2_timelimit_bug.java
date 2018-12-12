@@ -1871,10 +1871,19 @@ class NodeList{
 		Node new_start_node2;
 		ArrayList <Node> new_open_list1 = new ArrayList <Node> (); 
 		ArrayList <Node> new_open_list2 = new ArrayList <Node> (); 
+	    	long currentTime;//タイムアップ
+		long processingTime;//タイムアップ
 	
 		search_path(open_list1, open_list2); 
 
 		while(true){
+			currentTime = System.currentTimeMillis();//タイムアップ↓
+	    		processingTime = currentTime-startTime;
+	    		if(processingTime>12000){//制限時間
+				System.out.println("Time is up.");
+				help_search_path2();
+				return;
+	    		}//タイムアップ↑
 			if (equal_list1.size() != 0) {
 				new_start_node1 = equal_list1.get(equal_list1.size()-1);
 				close_list_change(new_start_node1,2);
@@ -2231,17 +2240,7 @@ class NodeList{
 	Node n1,n2;
 	ArrayList <Node> parent_list = new ArrayList <Node> (); 
 
-	long currentTime;//タイムアップ
-	long processingTime;//タイムアップ
-	
 	while(true){
-	    currentTime = System.currentTimeMillis();//タイムアップ↓
-	    processingTime = currentTime-startTime;
-	    if(processingTime>12000){//制限時間
-		System.out.println("Time is up.");
-		help_search_path2();
-		return;
-	    }//タイムアップ↑
 	    if(open1.size() == 0 || open2.size() == 0){ 
 		System.out.println("There is no route until reaching a goal.");
 		equal_list_arrangement(equal_list1,1);
