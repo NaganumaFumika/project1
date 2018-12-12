@@ -1,33 +1,20 @@
+/*aStarのstackoverflow問題を解決した最新版(12/12)*/
+
 import javax.swing.*;
-
 import java.awt.*;
-
 import java.awt.event.*;
-
 import java.util.*;
-
 import java.io.*;
-
 import java.awt.image.*;
-
 import javax.imageio.*;
-
 import java.awt.Graphics;
-
 import java.awt.Color;
-
 import java.awt.Point;
-
 import java.awt.RenderingHints;
-
 import java.util.Random;
-
 import java.io.File;
-
 import java.io.FileWriter;
-
 import java.io.IOException;
-
 
 //262行目で5丁目付近の出力
 //mapボタンを押したらuserを中心に100ピクセルの正方形を出力
