@@ -161,9 +161,36 @@ class NodeList{
     goal_node.Gfs = goal_node.Ghs; /////
     open_list1.add(start_node); /////
     open_list2.add(goal_node); /////
-	search_path(open_list1, open_list2); /////
+	action(open_list1, open_list2); /////
     }
 
+    public void action(ArrayList<Node> open1, ArrayList<Node> open2) { //new!再帰防止関数
+		Node new_start_node1;
+		Node new_start_node2;
+		ArrayList <Node> new_open_list1 = new ArrayList <Node> (); 
+		ArrayList <Node> new_open_list2 = new ArrayList <Node> (); 
+	
+		search_path(open_list1, open_list2); 
+
+		while(true){
+			if (equal_list1.size() != 0) {
+				new_start_node1 = equal_list1.get(equal_list1.size()-1);
+				close_list_change(new_start_node1,2);
+				delete(equal_list1,equal_list1.get(equal_list1.size()-1));
+				new_open_list1.add(new_start_node1);        
+				search_path(new_open_list1, open2);
+			}else if (equal_list2.size() != 0) {
+				new_start_node2 = equal_list2.get(equal_list2.size()-1);
+				close_list_change(new_start_node2,1);
+				delete(equal_list2,equal_list2.get(equal_list2.size()-1));
+				new_open_list2.add(new_start_node2);
+				search_path(open1, new_open_list2);
+			}else{
+				return;
+			}
+		}
+	}
+	
     public Node findN(int xP,int yP,ArrayList<Node> list){
 	    Node node;
 	    for(int i = 0;i<list.size();i++){
@@ -195,80 +222,85 @@ class NodeList{
 	    }
     }	
 
-    //while True:以降の処理？
-    public void search_path(ArrayList<Node> open1, ArrayList<Node> open2){ /////
+    //経路探索
+    public void search_path(ArrayList<Node> open1, ArrayList<Node> open2){ 
 	Node n1,n2;
-    Node new_start_node1;
-    Node new_start_node2;
-    ArrayList <Node> new_open_list1 = new ArrayList <Node> (); //引数リスト
-    ArrayList <Node> new_open_list2 = new ArrayList <Node> (); //引数リスト
-    ArrayList <Node> parent_list = new ArrayList <Node> (); /////
-    /*int dist,n_gs;
-	boolean flag;
-	int x = 0;
-	int y = 0;*/
+	ArrayList <Node> parent_list = new ArrayList <Node> (); 
 
+	long currentTime;//タイムアップ
+	long processingTime;//タイムアップ
+	
 	while(true){
-	    if(open1.size() == 0 || open2.size() == 0){ /////
+	    currentTime = System.currentTimeMillis();//タイムアップ↓
+	    processingTime = currentTime-startTime;
+	    if(processingTime>12000){//制限時間
+		System.out.println("Time is up.");
+		help_search_path2();
+		return;
+	    }//タイムアップ↑
+	    if(open1.size() == 0 || open2.size() == 0){ 
 		System.out.println("There is no route until reaching a goal.");
-        help_search_path2();
-        return;
+		equal_list_arrangement(equal_list1,1);
+		equal_list_arrangement(equal_list2,2);
+		if(equal_list2.size() == 0 && equal_list1.size() == 0){
+		    System.out.println("探索終了!");
+		    help_search_path2();
+		    return;
+		}else{
+			return;
+		}
 	    }
-
-	    n1 = minS(open1); /////
+	    
+	    n1 = minS(open1); 
 	    delete(open1,n1);
-        close_list1.add(n1); 
-        
-        search(n1,open1,1);
-        if(open1.size() == 0 || open2.size() == 0){   /////このへん変更したyo!
-            System.out.println("There is no route until reaching a goal.");
-            help_search_path2();
-            return;
-        }
-
-        n2 = minG(open2);
+	    close_list1.add(n1); 
+	    
+	    search(n1,open1,1);
+	    
+	    if(open1.size() == 0 || open2.size() == 0){   
+		System.out.println("There is no route until reaching a goal.");
+		equal_list_arrangement(equal_list1,1);
+		equal_list_arrangement(equal_list2,2);
+		if(equal_list2.size() == 0 && equal_list1.size() == 0){
+		    System.out.println("探索終了!");
+		    help_search_path2();
+		    return;
+		}else{
+		    return;
+		}
+	    }
+	    
+	    n2 = minG(open2);
 	    delete(open2,n2);
-        close_list2.add(n2); 
-        
-        Node z1 = minS(open1);
-        while (z1 != null) {
-            parent_list.add(z1);
-            z1 = z1.Sparent_node;
-        }
-
-        if (find(n2.pos[0],n2.pos[1],parent_list)) {
-            Gend_node = n2; /////
-            Send_node = findN(n2.pos[0],n2.pos[1],parent_list); /////
-            help_search_path1(); 
-            cycle_num++;
-            equal_list_arrangement(equal_list1,1);/////このへん変更したyo!
-		    equal_list_arrangement(equal_list2,2);/////このへん変更したyo!
-            if(equal_list2.size() == 0 && equal_list1.size() == 0){
-                System.out.println("探索終了!");
-                help_search_path2();
-                //System.exit(1);
-                return;
-		    }else if (equal_list1.size() == 0){
-                new_start_node2 = equal_list2.get(equal_list2.size()-1);
-	    	    close_list_change(new_start_node2,1);/////このへん変更したyo!
-		        delete(equal_list2,equal_list2.get(equal_list2.size()-1));
-                new_open_list2.add(new_start_node2);
-                search_path(open1, new_open_list2); /////このへん変更したyo!
-                return;
-		    }else{
-                new_start_node1 = equal_list1.get(equal_list1.size()-1);
-	    	    close_list_change(new_start_node1,2);/////このへん変更したyo!
-		        delete(equal_list1,equal_list1.get(equal_list1.size()-1));
-                new_open_list1.add(new_start_node1);        
-                search_path(new_open_list1, open2); /////このへん変更したyo!
-                return;
-            }
-        }
-        parent_list.clear();
-    
-        search(n2,open2,0);
+	    close_list2.add(n2); 
+	    
+	    Node z1 = minS(open1);
+	    while (z1 != null) {
+		parent_list.add(z1);
+		z1 = z1.Sparent_node;
+	    }
+	    
+	    if (find(n2.pos[0],n2.pos[1],parent_list)) {
+		Gend_node = n2; 
+		Send_node = findN(n2.pos[0],n2.pos[1],parent_list);
+		help_search_path1(); 
+		cycle_num++;
+		equal_list_arrangement(equal_list1,1);
+		equal_list_arrangement(equal_list2,2);
+		if(equal_list2.size() == 0 && equal_list1.size() == 0){
+		    System.out.println("探索終了!");
+		    help_search_path2();
+		    return;
+		}else{
+		    return;
+		}
+	    }
+	    parent_list.clear();
+	    
+	    search(n2,open2,0);
 	}
-    }/////↑ここまで
+
+    }
 
     public void search (Node n, ArrayList<Node> list, int a) { /////new関数
         Node v;
