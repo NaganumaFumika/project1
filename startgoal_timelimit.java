@@ -61,7 +61,7 @@ public class startgoal_timelimit extends JPanel{
 
 
 
-    P2_2_timelimit_bug (){
+    startgoal_timelimit (){
 
 	human.add(user);
 
