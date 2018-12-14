@@ -1396,178 +1396,91 @@ class NodeList{
                 path1 = path1.Sparent_node;
             } 
         }else{
-
             if (path1.Sparent_node == null && path2.Gparent_node == null) {
-
                 break; 
-
             }
-
             if (path1.Sparent_node != null) {
-
                 path_list.add(path1);
-
                 path1 = path1.Sparent_node;
-
             } 
-
             if (path2.Gparent_node != null) {
-
                 path_list.add(path2);
-
                 path2 = path2.Gparent_node;
-
             }
-
         }
-
     }
-
     
-
     //マップ情報を格納・保持
-
     if(cycle_num == 1){
-
 	min_path = path_list.size();
-
 	m = new Astar_Map(path_list);
-
 	a_map = m;
-
     }else{
-
 	if(min_path>=path_list.size()){
-
 	    //min_pathより大きい時は格納しない
-
 	    //マップ情報を格納・保持
-
 	    m = new Astar_Map(path_list);
-
 	    m.p_node = a_map;
-
 	    a_map = m;
-
 	    }
-
     }
-
     path_list.clear();
-
     }
-
     
-
     
-
     
-
     //道幅が最も大きい道を通る経路を候補から選び出し、その経路を表示する関数  
-
     public void help_search_path2(){
-
 	ArrayList<Integer> michihaba_width = new ArrayList<Integer>();
-
 	//ArrayList<Astar_Map> arg = new ArrayList<Astar_Map>();
-
 	int haba = 0;
-
 	int max =0;
-
 	Astar_Map m1 = a_map;
-
 	Astar_Map m2 = a_map;
-
 	int count =0;
-
 	char[][] new_map = new char[aStar.map_height][aStar.map_width];
 
-
-
 	while(true){
-
 	    if(m1 ==null) break;
-
 	    for(int i=0;i<m1.p_list.size();i++){
-
 		haba += m1.p_list.get(i).michihaba;
-
 	    }
-
 	    michihaba_width.add(haba);
-
 	    haba = 0;
-
 	    m1 = m1.p_node;
-
 	}
 
-
-
 	
-
 	max = michihaba_width.get(0);
-
 	for(int i = 0;i<michihaba_width.size();i++){
-
 	    if(max<michihaba_width.get(i)){
-
 		max = michihaba_width.get(i);
-
         //count = michihaba_width.size()-i-2;
-
 		count = i;
-
 	    }
-
 	}
-
 	
-
 	while(count >0){
-
 	    m2 = m2.p_node;
-
 	    count--;
-
 	}
-
-
 
 	//map informatin making
-
 	for (int i = 0; i < aStar.map_height; i++) {
-
 	    for (int j = 0; j < aStar.map_width; j++) {
-
 		new_map[i][j] = aStar.aStarmap[i][j];
-
 	    }
-
 	}	
-
 	
-
 	for(int i = 0;i<m2.p_list.size();i++){
-
 	    new_map[m2.p_list.get(i).pos[1]][m2.p_list.get(i).pos[0]] = '+'; 
-
 	}
-
-
 
 	for (int i = 0; i < aStar.map_height; i++) {
-
 	    for (int j = 0; j < aStar.map_width; j++) {
-
             ex2_sg_timelimit.map_result[i][j] = new_map[i][j];
-
 	    }
-
 	}
-
-
 
 	/*ファイルへの書き出し
 	try{
