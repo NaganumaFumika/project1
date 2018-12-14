@@ -19,7 +19,7 @@ import java.io.IOException;
 //262行目で5丁目付近の出力
 //mapボタンを押したらuserを中心に100ピクセルの正方形を出力
 
-public class P2_2_timelimit_bug extends JPanel{
+public class startgoal_timelimit extends JPanel{
 
     Map map = new Map();
 
@@ -982,7 +982,7 @@ public class P2_2_timelimit_bug extends JPanel{
 
 	fr.getContentPane().setBackground(new Color(255, 255, 255));
 
-        P2_2_timelimit_bug pr =new P2_2_timelimit_bug();
+        startgoal_timelimit pr =new startgoal_timelimit();
 
         pr.setOpaque(false);
 
@@ -2725,7 +2725,7 @@ class NodeList{
 
 	    for (int j = 0; j < aStar.map_width; j++) {
 
-		P2_2_timelimit_bug.map_result[i][j] = new_map[i][j];
+		startgoal_timelimit.map_result[i][j] = new_map[i][j];
 
 	    }
 
