@@ -843,7 +843,7 @@ class Node{
         Sparent_node = null; /////
         Gparent_node = null; /////
 
-	if(aStar.aStarmap[y][x] == 'P'){
+	if(aStar.aStarmap[y][x] == 'P'){//12/14訂正
 	    risk = 1;
 	}else{
 	    risk = 0;    
@@ -1387,6 +1387,7 @@ class NodeList{
     }
 
     //道幅が最も大きい道を通る経路を候補から選び出し、その経路を表示する関数  
+   //12/14訂正
     public void help_search_path2(){
 	ArrayList<Integer> michihaba_width = new ArrayList<Integer>();
 	ArrayList<Integer> risk_list = new ArrayList<Integer>();
