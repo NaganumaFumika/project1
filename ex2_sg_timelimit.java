@@ -1007,7 +1007,7 @@ class NodeList{
 		while(true){
 			currentTime = System.currentTimeMillis();//タイムアップ↓
 	    		processingTime = currentTime-startTime;
-	    		if(processingTime>12000){//制限時間
+	    		if(processingTime>5000){//制限時間
 				System.out.println("Time is up.");
 				help_search_path2();
 				return;
