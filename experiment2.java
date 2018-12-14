@@ -51,7 +51,7 @@ public class experiment2 extends JPanel{
 	research.y = 230;
 	research.name = "ナビ";
 	//char button_flag;
-	int x_s =413;
+	int x_s =413;   //ここ変えると座標変えられる！ただダイクストラは注意！
 	int y_s = 348;
 	int x_g =272;
 	int y_g =142;
