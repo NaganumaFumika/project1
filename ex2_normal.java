@@ -1,4 +1,5 @@
 //experiment2のシュミレーションと、astar_normalの融合
+//超時間かかる
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
