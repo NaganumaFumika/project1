@@ -34,6 +34,8 @@ public class experiment2 extends JPanel{
     ArrayList<Map.barrier> obs = new ArrayList <Map.barrier>();
     public static char[][] map_result = new char [900][900];
     public char button_flag;
+    int x_s =413;   //ここ変えると座標変えられる！ただダイクストラは注意！
+    int y_s = 348;
     int x_g =272;
     int y_g =142;
 
@@ -51,10 +53,7 @@ public class experiment2 extends JPanel{
 	research.y = 230;
 	research.name = "ナビ";
 	//char button_flag;
-	int x_s =413;   //ここ変えると座標変えられる！ただダイクストラは注意！
-	int y_s = 348;
-	int x_g =272;
-	int y_g =142;
+	
 	map.map[y_s][x_s] = 'S'; 
 	map.map[y_g][x_g] = 'G';
 
