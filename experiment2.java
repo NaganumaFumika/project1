@@ -49,7 +49,7 @@ public class experiment2 extends JPanel{
 	tree.name = "倒木";
 	research.x = 920;
 	research.y = 230;
-	research.name = "再検索";
+	research.name = "ナビ";
 	//char button_flag;
 	int x_s =413;
 	int y_s = 348;
