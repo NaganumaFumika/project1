@@ -791,55 +791,30 @@ class Map extends JPanel{
     }
 }
 
-
 class aStar{
-
     public static int map_width,map_height;
-
     public static char[][] aStarmap;
-
     public static int[] start = new int[2];
-
     public static int[] goal = new int[2];
 
-
-
     public aStar(char[][] niimimap) {
-
 	this.aStarmap = niimimap;
-
 	this.map_height = aStarmap.length;	
-
 	this.map_width = aStarmap[0].length;
-
         for (int i = 0; i < map_height; i++) {
-
             for (int j = 0; j < map_width; j++) {
-
 		if ( aStarmap[i][j] == 'S' ) {
-
 		    start[0] = j; 
-
 		    start[1] = i;
-
 		}
-
 		if( aStarmap[i][j] == 'G'){
-
 		    goal[0] = j;
-
 		    goal[1] = i;
-
 		}
-
             }
-
         }
-
 	NodeList nodelist = new NodeList();
-
 	}
-
 }
 
 
@@ -849,146 +824,79 @@ class aStar{
 class Node{
 
     public int[] pos = new int[2];
-
     public int Shs, Sfs; /////
-
     public int Ghs, Gfs; /////
-
     public Node Sparent_node, Gparent_node; /////
-
     public int michihaba;//new
-
     public int risk;
-
     int count1 = 1;//new
-
     int count2 = 1;//new
 
- 
-
     // コンストラクタ
-
     public Node (int x, int y) {
         pos[0] = x;  
-
         pos[1] = y; 
-
         Shs = (int)(Math.pow(x-aStar.goal[0],2) + Math.pow(y-aStar.goal[1],2)); /////
-
         Sfs = 0; /////
-
         Ghs = (int)(Math.pow(x-aStar.start[0],2) + Math.pow(y-aStar.start[1],2));; /////
-
         Gfs = 0; /////
-
         Sparent_node = null; /////
-
         Gparent_node = null; /////
 
-
-
-	if(aStar.aStarmap[y][x] == 'F'){
-
+	if(aStar.aStarmap[y][x] == 'P'){
 	    risk = 1;
-
 	}else{
-
 	    risk = 0;    
-
 	}
 
-     
-
-	// !NEW! michihaba
-
 	if (aStar.aStarmap[y][x] == '0' || aStar.aStarmap[y][x] == 'X') {
-
 	    michihaba = 0;
-
 	}else{
-
 	    for (int i = x+1; i < aStar.map_width; i++) {
-
 		if (aStar.aStarmap[y][i] == '0' || aStar.aStarmap[y][i] == 'X') {
-
 		    break;
-
 		}
-
 		count1++;
-
 	    }
 
 	    for (int k = x-1; k > -1; k--) {
-
 		if (aStar.aStarmap[y][k] == '0' || aStar.aStarmap[y][k] == 'X') {
-
 		    break;
-
 		}
-
 		count1++;
-
 	    }
 
 	    for (int j = y+1; j < aStar.map_height; j++) {
-
 		if (aStar.aStarmap[j][x] == '0' || aStar.aStarmap[j][x] == 'X') {
-
 		    break;
-
 		}
-
 		count2++;
-
 	    }
 
 	    for (int m = y-1; m > -1; m--) {
-
 		if (aStar.aStarmap[m][x] == '0' || aStar.aStarmap[m][x] == 'X') {
-
 		    break;
-
 		}
-
 		count2++;
-
 	    }
 
 	    if (count1 > count2) {
-
 		michihaba = count2;
-
 	    }else{
-
 		michihaba = count1;
-
 	    }
-
 	}
-
     }
 
-    
-
     // 現在地をゴールとするメソッド
-
     public static boolean isGoal (Node n) {
 
 	if(n.pos[0] == aStar.goal[0] && n.pos[1] == aStar.goal[1]){	
-
 	    return true;
-
 	}else{
-
 	    return false;
-
 	}
-
     }
-
-
-
 }
 
 
@@ -996,87 +904,44 @@ class Node{
 //道幅考慮の際、最短経路を格納したArrayListを保持するためのクラス
 
 class Astar_Map{
-
     ArrayList <Node> p_list = new ArrayList <Node> (); 
-
     Astar_Map p_node;
 
-    
-
     Astar_Map(ArrayList<Node> close){
-
 	for(int i=0;i<close.size();i++){
-
 	    p_list.add(close.get(i));
-
 	}
-
 	p_node = null;   //parent_node
-
     }
-
 }
 
-
-
-
-
 class NodeList{
-
     char[][] newMap = new char[aStar.map_height][aStar.map_width];
-
     ArrayList <Node> open_list1 = new ArrayList <Node> (); /////
-
     ArrayList <Node> close_list1 = new ArrayList <Node> (); /////
-
     ArrayList <Node> open_list2 = new ArrayList <Node> (); /////
-
     ArrayList <Node> close_list2 = new ArrayList <Node> (); /////
-
     Node start_node = new Node(aStar.start[0],aStar.start[1]);
-
     Node goal_node = new Node(aStar.goal[0],aStar.goal[1]); /////
-
     Node Send_node, Gend_node; /////
-
     ArrayList <Node> end_list = new ArrayList <Node> (); 
-
     ArrayList <Integer> sum_michihaba  = new ArrayList <Integer> ();  
-
     ArrayList <Node> equal_list1 = new ArrayList <Node> ();
-
     ArrayList <Node> equal_list2 = new ArrayList <Node> ();
-
     ArrayList <Integer> ngs_list = new ArrayList <Integer> (); 
-
     ArrayList <Node> path_list = new ArrayList <Node> ();
-
     Astar_Map a_map; 
-
     int cycle_num = 1;
-
-	int min_path;
-
-	long startTime;//タイムアップ
-
-
-
-
+    int min_path;
+    long startTime;//タイムアップ
 
     NodeList(){
-
-		startTime = System.currentTimeMillis();//タイムアップ
-
+	startTime = System.currentTimeMillis();//タイムアップ
 	start_node.Sfs = start_node.Shs; /////
-
 	goal_node.Gfs = goal_node.Ghs; /////
-
 	open_list1.add(start_node); /////
-
 	open_list2.add(goal_node); /////
-
 	action(open_list1, open_list2); /////
-
     }
 
     public void action(ArrayList<Node> open1, ArrayList<Node> open2) { //new!再帰防止関数
@@ -1092,7 +957,7 @@ class NodeList{
 		while(true){
 			currentTime = System.currentTimeMillis();//タイムアップ↓
 	    		processingTime = currentTime-startTime;
-	    		if(processingTime>12000){//制限時間
+	    		if(processingTime>10000){//制限時間
 				System.out.println("Time is up.");
 				help_search_path2();
 				return;
@@ -1115,285 +980,152 @@ class NodeList{
 		}
 	}
 
-	
     public Node findN(int xP,int yP,ArrayList<Node> list){
-
 	    Node node;
 
 	    for(int i = 0;i<list.size();i++){
-
 	        node = list.get(i);
-
 	        if(node.pos[0] == xP && node.pos[1] == yP){
-
 		    return node;
-
 	        }
-
 	    }
-
 	    return null;
-
     }
 
-
-
     public boolean find(int xP,int yP,ArrayList<Node> list){
-
         Node node;
 
 	for(int i = 0;i<list.size();i++){
-
             node = list.get(i);
-
 	    if(node.pos[0] == xP && node.pos[1] == yP){
-
 		return true;
-
 	    }
-
 	}
-
 	return false;
-
     }
 
     
 
     public void delete(ArrayList<Node> list,Node n){
-
 	int num = 0;
-
 	boolean judge = find(n.pos[0],n.pos[1],list);
-
 	if(judge){
-
 	    num = list.indexOf(n);
-
 	    list.remove(num);
-
 	}
-
     }	
 
-    
-
    //pythonにあってjavaにない関数の実装
-
     public Node minS(ArrayList<Node> openM){
-
 	Node minN = openM.get(0);
-
 	Node n;
-
 	int min = minN.Sfs;
-
 	int ngs = 0;
-
 	boolean flag2 = true;
 
-
-
 	for(int i = 0;i<openM.size();i++){
-
 	    n = openM.get(i);
-
 	    if(n.Sfs < min){
-
 		minN = n;
-
 		min = n.Sfs;
-
 	    }
-
 	}
 
 	for(int i = 0;i<openM.size();i++){
-
 	    n = openM.get(i);
-
 	    if(n.Sfs == min && minN != n && aStar.aStarmap[n.pos[1]][n.pos[0]] != 'S'){
-
 	       	for(int j = 0;j<equal_list1.size();j++){
-
 		    if(n.pos[0]==equal_list1.get(j).pos[0] &&
-
 		       n.pos[1]==equal_list1.get(j).pos[1]){
-
 			flag2 = false;
-
 		    }
-
 		}
 
 		if(flag2==true){
-
 		    ngs = n.Sfs - n.Shs;
-
 		    equal_list1.add(n);
-
 		    ngs_list.add(ngs);
-
 		}
-
 	    }
-
 	}
-
 	return minN;
-
     }
-
-    
 
     public Node minG(ArrayList<Node> openM){
-
         Node minN = openM.get(0);
-
         Node n;
-
         int min = minN.Gfs;
-
         int ngs = 0;
-
         boolean flag2 = true;
 
-    
-
         for(int i = 0;i<openM.size();i++){
-
             n = openM.get(i);
-
             if(n.Gfs < min){
-
                 minN = n;
-
                 min = n.Gfs;
-
             }
-
         }
 
         for(int i = 0;i<openM.size();i++){
-
             n = openM.get(i);
-
             if(n.Gfs == min && minN != n && aStar.aStarmap[n.pos[1]][n.pos[0]] != 'S'){
-
-                   for(int j = 0;j<equal_list2.size();j++){
-
+		for(int j = 0;j<equal_list2.size();j++){
                    if(n.pos[0]==equal_list2.get(j).pos[0] &&
-
 		      n.pos[1]==equal_list2.get(j).pos[1]){
-
 		       flag2 = false;
-
 		   }
-
+		}
+		if(flag2==true){
+		    ngs = n.Gfs - n.Ghs;
+		    equal_list2.add(n);
+		    ngs_list.add(ngs);
 		   }
-
-		   if(flag2==true){
-
-		       ngs = n.Gfs - n.Ghs;
-
-		       equal_list2.add(n);
-
-		       ngs_list.add(ngs);
-
-		   }
-
             }
-
         }
-
         return minN;
-
     }
 
-
-
     //equal_list内に同じ経路になりうる候補をここで消してる
-
     public void equal_list_arrangement(ArrayList<Node> equal,int id){/////このへん変更したyo!
-
 	Node n;
-
 	Node parent;
-
 	ArrayList<Node> delete_list = new ArrayList<Node>();
 
-	
-
 	if(id==0){
-
 	    for(int i= 0;i<equal.size();i++){
-
 	        n = equal.get(i);
-
 	        parent = n.Sparent_node;
-
 		while(true){
-
 		    if(parent == null) break;
-
 		    for(int j = 0;j<equal.size();j++){
-
 			if(parent == equal.get(j)){
-
 			    delete_list.add(equal.get(j));
-
     		        }
-
 	    	    }
-
 		    parent = parent.Sparent_node;
-
 		}
-
 	    }
-
 	    for(int i =0;i<delete_list.size();i++){
-
 	        delete(equal,delete_list.get(i));
-
 	    }
-
 	}else{
-
 	    for(int i= 0;i<equal.size();i++){
-
 		n = equal.get(i);
-
 		parent = n.Gparent_node;
-
 		while(true){
-
 		    if(parent == null) break;
-
 		    for(int j = 0;j<equal.size();j++){
-
 			if(parent == equal.get(j)){
-
 			    delete_list.add(equal.get(j));
-
 			}
-
 		    }   
-
 		    parent = parent.Gparent_node;
-
 		}
-
 	    }
-
 	    for(int i =0;i<delete_list.size();i++){
-
 		delete(equal,delete_list.get(i));
-
 	    }
-
 	}
-
     }
 
     
@@ -1401,52 +1133,28 @@ class NodeList{
     //2つ目以降の経路探索をする前にclose_listの中身を整理する関数  
 
     public void close_list_change(Node m,int id){/////このへん変更したyo!
-
 	Node n = m;
 
-	
-
 	if(id==1){
-
 	    close_list1.clear();
-
 	    while(true){
-
 	        n = n.Sparent_node;
-
 	        if(n == null){
-
 		    break;
-
 	        }
-
 	        close_list1.add(n);
-
 	    }
-
 	}else{
-
 	    close_list2.clear();
-
 	    while(true){
-
 	        n = n.Gparent_node;
-
 	        if(n == null){
-
 		    break;
-
 	        }
-
 	        close_list2.add(n);
-
 	    }
-
 	}	
-
     }
-
-
 
  //経路探索
     public void search_path(ArrayList<Node> open1, ArrayList<Node> open2){ 
@@ -1512,338 +1220,174 @@ class NodeList{
 		}
 	    }
 	    parent_list.clear();
-	    
 	    search(n2,open2,0);
 	}
-
     }
 
     
 
     public void search (Node n, ArrayList<Node> list, int a) { /////new関数
-
         Node v;
-
         int dist, n_gs;
-
 	boolean flag;
-
 	int x = 0;
-
         int y = 0;   
 
-	
-
         for(int i=0;i<4;i++){
-
             if(i==0){
-
                 x = n.pos[0] + 1;
-
                 y = n.pos[1] + 0;
-
             }else if(i==1){
-
                 x = n.pos[0] + -1;
-
                 y = n.pos[1] + 0;
-
             }else if (i==2){
-
                 x = n.pos[0] + 0;
-
                 y = n.pos[1] + 1;
-
             }else if (i==3) {
-
                 x = n.pos[0] + 0;
-
                 y = n.pos[1] + -1;
-
             }else if (i==4){
-
                 x = n.pos[0] + 1;
-
                 y = n.pos[1] + 1;
-
             }else if (i==5){
-
                 x = n.pos[0] + -1;
-
                 y = n.pos[1] + 1;
-
             }else if (i==6){
-
                 x = n.pos[0] + 1;
-
                 y = n.pos[1] + -1;
-
             }else{
-
                 x = n.pos[0] + -1;
-
                 y = n.pos[1] + -1;
-
             }
-
-            
 
             if (y <= 0 || y >= aStar.map_height ||
-
                 x <= 0 || x >= aStar.map_width ||
-
                 (aStar.aStarmap[y][x] == '0'||aStar.aStarmap[y][x] == 'X')) {
-
                 continue;
-
             }
-
-
 
             if (a == 1) {
-
 		n_gs = n.Sfs - n.Shs;
-
 		flag = find(x,y,list);
-
 		v = findN(x,y,list);
-
 		dist = (int)(Math.pow((n.pos[0]-x),2) + Math.pow((n.pos[1]-y),2));
 
-		
-
 		if(flag){
-
 		    if (v.Sfs > n_gs + v.Shs + dist){
-
 			v.Sfs = n_gs + v.Shs + dist;
-
 			v.Sparent_node = n;
-
 		    }
-
 		}else{
-
 		    flag = find(x,y,close_list1);
-
 		    v = findN(x,y,close_list1);
-
 		    if(flag){
-
 			if(v.Sfs > n_gs + v.Shs + dist){
-
 			    v.Sfs = n_gs + v.Shs + dist;
-
 			    v.Sparent_node = n;
-
 			    list.add(v);
-
 			    delete(close_list1,v);
-
 			}
-
 		    }else{
-
 			v = new Node(x,y);
-
 			v.Sfs = n_gs + v.Shs + dist;
-
 			v.Sparent_node = n;
-
 			list.add(v);
-
 		    }
-
 		}
-
             } else {
-
                 n_gs = n.Gfs - n.Ghs;
-
-		
-
                 flag = find(x,y,list);
-
                 v = findN(x,y,list);
-
                 dist = (int)(Math.pow((n.pos[0]-x),2) + Math.pow((n.pos[1]-y),2));
 
-                
-
                 if(flag){
-
                     if (v.Gfs > n_gs + v.Ghs + dist){
-
 			v.Gfs = n_gs + v.Ghs + dist;
-
 			v.Gparent_node = n;
-
                     }
-
                 }else{
-
                     flag = find(x,y,close_list2);
-
                     v = findN(x,y,close_list2);
-
                     if(flag){
-
 			if(v.Gfs > n_gs + v.Ghs + dist){
-
 			    v.Gfs = n_gs + v.Ghs + dist;
-
 			    v.Gparent_node = n;
-
 			    list.add(v);
-
 			    delete(close_list2,v);
-
 			}
-
                     }else{
-
 			v = new Node(x,y);
-
 			v.Gfs = n_gs + v.Ghs + dist;
-
 			v.Gparent_node = n;
-
 			list.add(v);
-
                     }
-
                 }
-
             }
-
         }
-
-	
-
     }
 
-    
-
      //最短経路の候補の経路を保存する関数
-
     public void help_search_path1(){
-
-    Node path1 = Send_node.Sparent_node; /////
-
-    Node path2 = Gend_node.Gparent_node; /////
-
-    Astar_Map m;
-
-
+	Node path1 = Send_node.Sparent_node; /////
+	Node path2 = Gend_node.Gparent_node; /////
+	Astar_Map m;
 
     // ルートとなるノードに印をつける
-
     while (true) {
-
         if(path1==null){/////このへん変更したyo!
-
             if (path2.Gparent_node == null) {
-
                 break;
-
             }
 
             if (path2.Gparent_node != null) {
-
                 path_list.add(path2);
-
                 path2 = path2.Gparent_node;
-
             }
 
         }else if (path2==null){/////このへん変更したyo!
-
             if (path1.Sparent_node == null) {
-
                 break; 
-
             }
-
             if (path1.Sparent_node != null) {
-
                 path_list.add(path1);
-
                 path1 = path1.Sparent_node;
-
             } 
-
         }else{
-
             if (path1.Sparent_node == null && path2.Gparent_node == null) {
-
                 break; 
-
             }
 
             if (path1.Sparent_node != null) {
-
                 path_list.add(path1);
-
                 path1 = path1.Sparent_node;
-
             } 
 
             if (path2.Gparent_node != null) {
-
                 path_list.add(path2);
-
                 path2 = path2.Gparent_node;
-
             }
-
         }
-
-    }
-
-    
+    }    
 
     //マップ情報を格納・保持
-
     if(cycle_num == 1){
-
 	min_path = path_list.size();
-
 	m = new Astar_Map(path_list);
-
 	a_map = m;
-
     }else{
-
 	if(min_path>=path_list.size()){
-
 	    //min_pathより大きい時は格納しない
-
 	    //マップ情報を格納・保持
-
 	    m = new Astar_Map(path_list);
-
 	    m.p_node = a_map;
-
 	    a_map = m;
-
 	    }
-
     }
-
     path_list.clear();
-
     }
-
-    
-
-    
-
-    
 
     //道幅が最も大きい道を通る経路を候補から選び出し、その経路を表示する関数  
-
     public void help_search_path2(){
-
 	ArrayList<Integer> michihaba_width = new ArrayList<Integer>();
 	ArrayList<Integer> risk_list = new ArrayList<Integer>();
 	ArrayList<Integer> index_list = new ArrayList<Integer>();
@@ -1882,7 +1426,9 @@ class NodeList{
 		risk_min = risk_list.get(i);
 	    }
 	}
-
+	for(int i = 0;i<risk_list.size();i++){
+	    System.out.println("危険度:"+risk_list.get(i));
+	}
 	//道のりのコストの最小値を調べる
 	cost_min = cost_list.get(0);
 	for(int i = 0;i<cost_list.size();i++){
@@ -1962,8 +1508,6 @@ class NodeList{
 		System.out.println(e);
 	}*/
 
-
-
 	/*
 	System.out.println("新しい道幅考慮したマップ:");
 	for (int i = 0; i < aStar.map_height; i++) {
@@ -1972,8 +1516,6 @@ class NodeList{
 	}*/
 
     }
-
-	
 
 	/*ファイルへの書き出し２
 	private static boolean checkBeforeWritefile(File file){
@@ -1984,10 +1526,5 @@ class NodeList{
 		}
 	
 		return false;
-	}*/
-
-    
-
-    
-
+		}*/
 }
