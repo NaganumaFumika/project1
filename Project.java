@@ -1426,9 +1426,7 @@ class NodeList{
 		risk_min = risk_list.get(i);
 	    }
 	}
-	for(int i = 0;i<risk_list.size();i++){
-	    System.out.println("危険度:"+risk_list.get(i));
-	}
+
 	//道のりのコストの最小値を調べる
 	cost_min = cost_list.get(0);
 	for(int i = 0;i<cost_list.size();i++){
