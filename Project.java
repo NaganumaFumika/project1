@@ -1328,8 +1328,8 @@ class NodeList{
 
      //最短経路の候補の経路を保存する関数
     public void help_search_path1(){
-	Node path1 = Send_node.Sparent_node; /////
-	Node path2 = Gend_node.Gparent_node; /////
+	Node path1 = Send_node; /////
+	Node path2 = Gend_node; /////
 	Astar_Map m;
 
     // ルートとなるノードに印をつける
