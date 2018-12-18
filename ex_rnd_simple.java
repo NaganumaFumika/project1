@@ -756,7 +756,7 @@ class NodeList{
         int y = 0;
 
         while(true){
-            if(open_list ==null){
+            if(open_list.size() == 0){
                 System.out.println("There is no route until reaching a goal.");
                 System.exit(1);
             }
